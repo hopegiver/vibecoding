@@ -25,7 +25,7 @@ https://프로젝트명.pages.dev  →  https://www.example.com
 한국:
 - 가비아 (gabia.com)
 - 후이즈 (whois.co.kr)
-- 카페24
+- 호스팅케이알 (hosting.kr)
 
 해외:
 - Namecheap
