@@ -15,8 +15,9 @@
 * **3. 첫 웹사이트 만들기**
   * [HTML 기초](docs/html-basics.md)
   * [CSS로 꾸미기](docs/css-basics.md)
+  * [JavaScript 소개](docs/javascript-intro.md)
+  * [JSON 데이터 이해하기](docs/json-basics.md)
   * [HTML 페이지 만들기](docs/first-html-page.md)
-  * [이미지와 링크 추가](docs/html-images-links.md)
 
 * **4. Pages 배포하기**
   * [Pages 소개](docs/pages-introduction.md)
@@ -24,11 +25,10 @@
   * [자동 배포 설정](docs/pages-auto-deploy.md)
   * [도메인 연결하기](docs/pages-custom-domain.md)
 
-* **5. AI로 웹 만들기**
-  * [JavaScript 소개](docs/javascript-intro.md)
-  * [JSON 데이터 이해하기](docs/json-basics.md)
-  * [AI로 직원 명부 만들기](docs/project-employee-list.md)
-  * [AI로 블로그 만들기](docs/project-simple-blog.md)
+* **5. 프로젝트 관리와 최적화**
+  * [프로젝트 폴더 구조](docs/project-structure.md)
+  * [효율적인 개발 워크플로우](docs/dev-workflow.md)
+  * [코드 최적화와 리팩토링](docs/code-optimization.md)
 
 * **6. 실전 프로젝트**
   * [회사 소개 페이지](docs/project-company-intro.md)
