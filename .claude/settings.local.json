@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n가이드북 구조 개편 및 새 문서 추가\n\n- 목차 재구성: 5장(AI로 웹 만들기), 7장(Pages Functions), 8장(Workers) 분리\n- Live Server 설치 가이드 추가\n- Linux 사용자 부분 제거\n- Cloudflare 유료 플랜 내용 제거\n- 도메인 구매 사이트에 hosting.kr 추가, 카페24 제거\n- 새 문서 3개 추가: JSON 업데이트, KV 스토리지, Workers vs Functions 비교\n- 사이드바 메뉴 업데이트 및 간소화\n- 사이드바 li 마진 조정\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []

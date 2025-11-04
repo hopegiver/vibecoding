@@ -28,6 +28,101 @@
 - 코딩에 관심은 있지만 어디서부터 시작할지 모르는 분
 - AI 도구로 빠르게 프로토타입을 만들고 싶은 분
 
+## AI 시대에도 기본을 배워야 하는 이유
+
+### "AI가 코드를 다 짜주는데 왜 HTML, CSS, JavaScript를 배워야 하나요?"
+
+좋은 질문입니다! 하지만 기본을 이해하면 AI를 **10배 더 효과적으로** 사용할 수 있습니다.
+
+### 1. AI에게 정확한 질문을 할 수 있습니다
+
+**기본을 모를 때:**
+```
+❌ "예쁜 웹사이트 만들어줘"
+→ AI가 뭘 만들어야 할지 모릅니다
+```
+
+**기본을 알 때:**
+```
+✅ "HTML로 구조 만들고, CSS flexbox로 3단 레이아웃,
+   JavaScript로 버튼 클릭 시 JSON 데이터 불러와줘"
+→ AI가 정확히 원하는 걸 만들어줍니다
+```
+
+### 2. AI가 만든 코드를 수정할 수 있습니다
+
+**현실적인 시나리오:**
+1. AI가 코드를 만들어줌
+2. 거의 완벽하지만 색상이 마음에 안 듦
+3. "파란색을 빨간색으로 바꿔줘" → AI가 엉뚱한 곳을 수정
+4. **CSS 기본을 알면** → 직접 `color: blue`를 `color: red`로 수정 (5초 해결)
+
+### 3. 에러를 이해하고 해결할 수 있습니다
+
+**기본을 모를 때:**
+```
+"Uncaught TypeError: Cannot read property 'name'"
+→ 무슨 뜻인지 몰라서 다시 AI에게 전체 코드 재작성 요청
+```
+
+**기본을 알 때:**
+```
+"아, JSON 데이터에 name 속성이 없구나"
+→ AI에게 "name 속성이 없을 때 기본값 처리해줘" 정확한 요청
+```
+
+### 4. AI가 틀렸을 때 알아챌 수 있습니다
+
+AI도 실수합니다! 기본을 알면:
+- "이건 HTML이 아니라 잘못된 코드네" 판단 가능
+- "이 방법보다 더 간단한 방법이 있는데" 더 나은 방향 제시
+- AI에게 다시 정확한 요청 가능
+
+### 5. 점진적으로 개선할 수 있습니다
+
+```
+1단계: AI가 기본 구조 생성
+2단계: CSS로 색상 변경 (직접)
+3단계: JavaScript로 버튼 추가 (AI 도움)
+4단계: JSON 데이터 연동 (AI 도움)
+5단계: 애니메이션 추가 (직접)
+```
+
+**기본을 모르면** → 매번 1단계부터 AI에게 전체 재작성 요청
+**기본을 알면** → 필요한 부분만 수정하며 빠르게 발전
+
+### 학습 시간은 단 하루!
+
+- **HTML**: 30분 - 태그 몇 개만 알면 됨
+- **CSS**: 1시간 - 색상, 크기, 배치만 이해
+- **JavaScript**: 1시간 - 변수, 함수, 이벤트 기본만
+- **JSON**: 30분 - 데이터 구조 이해
+
+**총 3시간 투자로** → **평생 AI를 10배 잘 활용**
+
+### 요리에 비유하면
+
+```
+AI = 최신 자동 조리기
+기본 지식 = 재료와 조리법 이해
+
+자동 조리기가 있어도:
+- 어떤 재료를 넣을지 알아야 함
+- 맛이 이상하면 뭘 조정할지 알아야 함
+- 원하는 요리를 정확히 설명할 수 있어야 함
+```
+
+### 결론: 바이브 코딩 = AI + 기본 지식
+
+이 가이드북은 AI 시대에 딱 필요한 만큼만 배웁니다:
+- ✅ AI에게 제대로 된 질문하기 위한 최소한의 지식
+- ✅ AI가 만든 결과물을 이해하고 수정하는 능력
+- ✅ 더 빠르고 정확하게 원하는 걸 만드는 방법
+
+**AI가 95%를 해줍니다. 나머지 5%를 위해 기본을 배우세요!**
+
+---
+
 ## 추천 학습 순서
 
 **초급자**: 1장 → 2장 → 3장 → 4장 → 5장 → 6장 프로젝트 1-2개
@@ -36,68 +131,7 @@
 
 **개발자**: 2장 → 4장 → 7장 → 필요한 프로젝트
 
----
-
-## 목차
-
-### 1. 시작하기
-- [바이브 코딩이란?](./docs/what-is-vibe-coding.md)
-- [Cursor 설치하기](./docs/cursor-setup.md)
-- [GitHub 계정 만들기](./docs/github-account.md)
-- [Cloudflare 계정 만들기](./docs/cloudflare-account.md)
-
-### 2. Cursor와 친해지기
-- [Cursor 첫 화면 이해하기](./docs/cursor-basics.md)
-- [AI와 대화하며 코딩하기](./docs/cursor-chat.md)
-- [좋은 질문 하는 법](./docs/how-to-ask-ai.md)
-- [자주 쓰는 단축키](./docs/cursor-shortcuts.md)
-
-### 3. 첫 번째 웹사이트 만들기 (HTML/CSS)
-- [HTML 기초 - 5분 만에 이해하기](./docs/html-basics.md)
-- [CSS로 예쁘게 꾸미기](./docs/css-basics.md)
-- [Cursor로 HTML 페이지 만들기](./docs/first-html-page.md)
-- [이미지와 링크 추가하기](./docs/html-images-links.md)
-
-### 4. Cloudflare Pages로 배포하기
-- [Pages가 뭔가요?](./docs/pages-introduction.md)
-- [GitHub와 Pages 연결하기](./docs/pages-deploy-git.md)
-- [자동 배포 설정하기](./docs/pages-auto-deploy.md)
-- [내 도메인 연결하기](./docs/pages-custom-domain.md)
-
-### 5. AI로 인터랙티브한 웹 만들기
-- [JavaScript가 뭔가요?](./docs/javascript-intro.md)
-- [JSON 데이터 이해하기](./docs/json-basics.md)
-- [AI로 직원 명부 만들기](./docs/project-employee-list.md)
-- [AI로 간단한 블로그 만들기](./docs/project-simple-blog.md)
-
-### 6. 실전 프로젝트 (종합편)
-- [회사 소개 페이지](./docs/project-company-intro.md)
-- [제품 카탈로그 사이트](./docs/project-product-catalog.md)
-- [FAQ 페이지 (검색 기능 포함)](./docs/project-faq-page.md)
-- [간단한 설문조사 페이지](./docs/project-survey.md)
-- [포트폴리오 웹사이트](./docs/project-portfolio.md)
-
-### 7. Pages Functions로 동적 기능 추가하기 (선택)
-- [Pages Functions 소개](./docs/pages-functions-intro.md)
-- [간단한 API 만들기](./docs/simple-api.md)
-- [폼 제출 처리하기](./docs/form-handling.md)
-- [JSON 파일 업데이트하기](./docs/update-json-with-functions.md)
-
-### 8. Workers로 고급 백엔드 만들기 (선택)
-- [Workers 기초](./docs/workers-basics.md)
-- [Workers와 Pages Functions 비교](./docs/workers-vs-functions.md)
-- [KV 스토리지로 데이터 저장하기](./docs/kv-storage.md)
-
-### 9. 유용한 팁과 트릭
-- [자주 하는 실수들](./docs/common-mistakes.md)
-- [디버깅하는 법](./docs/debugging-tips.md)
-- [무료 리소스 모음](./docs/free-resources.md)
-- [색상/폰트 조합 추천](./docs/design-tips.md)
-
-### 10. 문제 해결
-- [에러 메시지 읽는 법](./docs/reading-errors.md)
-- [자주 묻는 질문 (FAQ)](./docs/faq.md)
-- [도움 받을 수 있는 곳](./docs/getting-help.md)
+> 자세한 목차는 왼쪽 사이드 메뉴를 참고하세요!
 
 ---
 

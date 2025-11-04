@@ -93,7 +93,66 @@ id = "여기에_KV_네임스페이스_ID"
 
 KV 네임스페이스 ID는 대시보드의 KV 목록에서 확인 가능
 
-## Functions에서 KV 사용하기
+## Workers + Hono에서 KV 사용하기
+
+### 설정
+
+**wrangler.toml**
+```toml
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "your-kv-namespace-id"
+```
+
+**타입 정의**
+```typescript
+// src/types/env.ts
+export type Env = {
+  MY_KV: KVNamespace;
+};
+```
+
+### 기본 작업
+
+**src/index.ts**
+```typescript
+import { Hono } from 'hono';
+import type { Env } from './types/env';
+
+const app = new Hono<{ Bindings: Env }>();
+
+// 1. 값 저장 (PUT)
+app.post('/api/save', async (c) => {
+  const body = await c.req.json();
+  await c.env.MY_KV.put('myKey', JSON.stringify(body));
+
+  return c.json({ success: true });
+});
+
+// 2. 값 읽기 (GET)
+app.get('/api/get', async (c) => {
+  const value = await c.env.MY_KV.get('myKey', { type: 'json' });
+  return c.json(value);
+});
+
+// 3. 값 삭제 (DELETE)
+app.delete('/api/delete', async (c) => {
+  await c.env.MY_KV.delete('myKey');
+  return c.json({ success: true });
+});
+
+// 4. 키 목록 조회 (LIST)
+app.get('/api/list', async (c) => {
+  const { keys } = await c.env.MY_KV.list();
+  return c.json(keys);
+});
+
+export default app;
+```
+
+## Pages Functions에서 KV 사용하기
+
+Functions에서도 KV를 사용할 수 있습니다 (초보자 추천).
 
 ### 기본 작업
 
@@ -161,10 +220,84 @@ export async function onRequestGet(context) {
 }
 ```
 
-## 실전 예제: 댓글 시스템 (KV 버전)
+## 실전 예제: 댓글 시스템
 
-### Cursor에게 요청
+### Workers + Hono 버전
 
+**src/routes/comments.ts**
+```typescript
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import type { Env } from '../types/env';
+
+const comments = new Hono<{ Bindings: Env }>();
+
+// CORS 설정
+comments.use('*', cors());
+
+// 댓글 목록 조회
+comments.get('/', async (c) => {
+  const list = await c.env.MY_KV.get('comments', { type: 'json' }) || [];
+  return c.json(list);
+});
+
+// 댓글 추가
+comments.post('/', async (c) => {
+  const { author, content } = await c.req.json();
+
+  if (!author || !content) {
+    return c.json({ error: 'Author and content are required' }, 400);
+  }
+
+  // 기존 댓글 가져오기
+  let list = await c.env.MY_KV.get('comments', { type: 'json' }) || [];
+
+  // 새 댓글 추가
+  const newComment = {
+    id: Date.now(),
+    author,
+    content,
+    timestamp: new Date().toISOString()
+  };
+  list.unshift(newComment);
+
+  // KV에 저장
+  await c.env.MY_KV.put('comments', JSON.stringify(list));
+
+  return c.json({ success: true, comment: newComment });
+});
+
+// 댓글 삭제
+comments.delete('/:id', async (c) => {
+  const id = parseInt(c.req.param('id'));
+
+  let list = await c.env.MY_KV.get('comments', { type: 'json' }) || [];
+  list = list.filter((comment: any) => comment.id !== id);
+
+  await c.env.MY_KV.put('comments', JSON.stringify(list));
+
+  return c.json({ success: true });
+});
+
+export default comments;
+```
+
+**src/index.ts**
+```typescript
+import { Hono } from 'hono';
+import comments from './routes/comments';
+import type { Env } from './types/env';
+
+const app = new Hono<{ Bindings: Env }>();
+
+app.route('/api/comments', comments);
+
+export default app;
+```
+
+### Pages Functions 버전
+
+Cursor에게 요청:
 ```
 KV 스토리지를 사용하는 댓글 시스템 만들어줘.
 
@@ -192,7 +325,7 @@ KV 네임스페이스: MY_KV (이미 바인딩됨)
 CORS 헤더 포함해줘.
 ```
 
-### 예상 코드
+### 예상 코드 (Pages Functions)
 
 #### functions/api/comments/list.js
 ```javascript

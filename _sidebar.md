@@ -5,6 +5,7 @@
   * [Cursor 설치하기](docs/cursor-setup.md)
   * [GitHub 계정 만들기](docs/github-account.md)
   * [Cloudflare 계정 만들기](docs/cloudflare-account.md)
+  * [템플릿으로 빠르게 시작하기](docs/quick-start-template.md)
 
 * **2. Cursor 사용법**
   * [첫 화면 이해하기](docs/cursor-basics.md)
@@ -15,9 +16,9 @@
 * **3. 첫 웹사이트 만들기**
   * [HTML 기초](docs/html-basics.md)
   * [CSS로 꾸미기](docs/css-basics.md)
+  * [HTML 페이지 만들기](docs/first-html-page.md)
   * [JavaScript 소개](docs/javascript-intro.md)
   * [JSON 데이터 이해하기](docs/json-basics.md)
-  * [HTML 페이지 만들기](docs/first-html-page.md)
 
 * **4. Pages 배포하기**
   * [Pages 소개](docs/pages-introduction.md)
@@ -25,17 +26,17 @@
   * [자동 배포 설정](docs/pages-auto-deploy.md)
   * [도메인 연결하기](docs/pages-custom-domain.md)
 
-* **5. 프로젝트 관리와 최적화**
-  * [프로젝트 폴더 구조](docs/project-structure.md)
-  * [효율적인 개발 워크플로우](docs/dev-workflow.md)
-  * [코드 최적화와 리팩토링](docs/code-optimization.md)
-
-* **6. 실전 프로젝트**
+* **5. 실전 프로젝트**
   * [회사 소개 페이지](docs/project-company-intro.md)
   * [제품 카탈로그](docs/project-product-catalog.md)
   * [FAQ 페이지](docs/project-faq-page.md)
   * [설문조사 페이지](docs/project-survey.md)
   * [포트폴리오](docs/project-portfolio.md)
+
+* **6. 프로젝트 관리와 최적화**
+  * [프로젝트 폴더 구조](docs/project-structure.md)
+  * [효율적인 개발 워크플로우](docs/dev-workflow.md)
+  * [코드 최적화와 리팩토링](docs/code-optimization.md)
 
 * **7. Pages Functions**
   * [Functions 소개](docs/pages-functions-intro.md)
@@ -43,10 +44,13 @@
   * [폼 제출 처리](docs/form-handling.md)
   * [JSON 업데이트](docs/update-json-with-functions.md)
 
-* **8. Workers (고급)**
+* **8. Workers (개발자용)**
   * [Workers 기초](docs/workers-basics.md)
-  * [Functions vs Workers](docs/workers-vs-functions.md)
+  * [JavaScript vs TypeScript](docs/js-vs-ts.md)
   * [KV 스토리지](docs/kv-storage.md)
+  * [D1 데이터베이스](docs/d1-database.md)
+  * [R2 파일 스토리지](docs/r2-storage.md)
+  * [실전: REST API 만들기](docs/workers-rest-api.md)
 
 * **9. 팁과 트릭**
   * [자주 하는 실수](docs/common-mistakes.md)
