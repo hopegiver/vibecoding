@@ -2,6 +2,75 @@
 
 Cloudflare Workers KV는 간단하면서도 강력한 키-값 저장소입니다.
 
+## AI로 KV 스토리지 시작하기
+
+복잡한 설정은 AI에게 맡기세요! Run 버튼만 클릭하면 됩니다.
+
+### 1. KV 네임스페이스 만들기
+
+**AI에게 요청:**
+```
+Cloudflare KV 네임스페이스를 만들고 싶어.
+wrangler kv:namespace create 명령어를 실행해줘.
+네임스페이스 이름은 MY_DATA로 해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+wrangler kv:namespace create MY_DATA
+```
+
+**Run 버튼 클릭!**
+
+터미널에 네임스페이스 ID가 표시됩니다:
+```
+{ binding = "MY_DATA", id = "abcdef123456" }
+```
+
+### 2. Workers에 KV 바인딩
+
+**AI에게 요청:**
+```
+방금 만든 KV 네임스페이스를 Workers에 연결해줘.
+wrangler.toml에 바인딩을 추가하고,
+TypeScript 타입도 정의해줘.
+```
+
+**AI가 수정한 파일들:**
+
+**wrangler.toml:**
+```toml
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "abcdef123456"
+```
+
+**src/types/env.ts:**
+```typescript
+export type Env = {
+  MY_KV: KVNamespace;
+};
+```
+
+### 3. KV 사용하는 API 만들기
+
+**AI에게 요청:**
+```
+KV 스토리지를 사용하는 간단한 API를 만들어줘.
+
+기능:
+- POST /api/save : 데이터 저장
+- GET /api/get : 데이터 조회
+- DELETE /api/delete : 데이터 삭제
+- GET /api/list : 모든 키 목록
+
+JSON 형식으로 데이터를 저장하고 읽어줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 완전한 API 코드를 생성합니다.
+
 ## KV란?
 
 ### 기본 개념

@@ -2,10 +2,10 @@
 
 * **1. 시작하기**
   * [바이브 코딩이란?](docs/what-is-vibe-coding.md)
+  * [Git 설치하기](docs/git-setup.md)
   * [Cursor 설치하기](docs/cursor-setup.md)
   * [GitHub 계정 만들기](docs/github-account.md)
   * [Cloudflare 계정 만들기](docs/cloudflare-account.md)
-  * [템플릿으로 빠르게 시작하기](docs/quick-start-template.md)
 
 * **2. Cursor 사용법**
   * [첫 화면 이해하기](docs/cursor-basics.md)
@@ -21,6 +21,7 @@
   * [JSON 데이터 이해하기](docs/json-basics.md)
 
 * **4. Pages 배포하기**
+  * [GitHub에 코드 올리기](docs/push-to-github.md)
   * [Pages 소개](docs/pages-introduction.md)
   * [GitHub 연결하기](docs/pages-deploy-git.md)
   * [자동 배포 설정](docs/pages-auto-deploy.md)
@@ -32,6 +33,7 @@
   * [FAQ 페이지](docs/project-faq-page.md)
   * [설문조사 페이지](docs/project-survey.md)
   * [포트폴리오](docs/project-portfolio.md)
+  * [템플릿 활용하기](docs/quick-start-template.md)
 
 * **6. 프로젝트 관리와 최적화**
   * [프로젝트 폴더 구조](docs/project-structure.md)
@@ -46,11 +48,16 @@
 
 * **8. Workers (개발자용)**
   * [Workers 기초](docs/workers-basics.md)
-  * [JavaScript vs TypeScript](docs/js-vs-ts.md)
+  * [환경 변수와 Secrets](docs/workers-env-secrets.md)
   * [KV 스토리지](docs/kv-storage.md)
   * [D1 데이터베이스](docs/d1-database.md)
   * [R2 파일 스토리지](docs/r2-storage.md)
+  * [사용자 인증 (JWT)](docs/workers-auth.md)
+  * [OpenAPI 문서 만들기](docs/workers-openapi.md)
   * [실전: REST API 만들기](docs/workers-rest-api.md)
+  * [실전: AI 챗봇 만들기](docs/workers-ai-chatbot.md)
+  * [로깅과 모니터링](docs/workers-logging.md)
+  * [테스트 작성하기](docs/workers-testing.md)
 
 * **9. 팁과 트릭**
   * [자주 하는 실수](docs/common-mistakes.md)

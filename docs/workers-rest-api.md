@@ -1,6 +1,355 @@
 # 실전: REST API 만들기
 
-Workers와 Hono로 실제 프로덕션에서 사용할 수 있는 REST API를 만들어봅시다.
+AI와 함께 실제 프로덕션 환경에서 사용할 수 있는 완전한 REST API를 만들어봅시다!
+
+## AI로 REST API 만들기
+
+복잡한 API도 AI에게 요청만 하면 됩니다!
+
+### 방법 1: 요구사항 정의서로 전체 API 생성
+
+실무에서 가장 추천하는 방법입니다. AI가 요구사항 정의서를 만들어주고, 그것을 기반으로 전체 API를 자동 생성합니다!
+
+#### 1단계: AI에게 요구사항 정의서 작성 요청
+
+먼저 AI에게 요구사항 정의서를 작성하도록 요청합니다.
+
+**AI에게 요청:**
+```
+블로그 관리 시스템을 만들고 싶어.
+requirements.txt 파일에 다음 내용을 포함한 요구사항 정의서를 작성해줘:
+
+1. 기능 요구사항
+2. 데이터베이스 스키마 (테이블 구조)
+3. API 엔드포인트 목록
+4. 제약사항
+
+기능은 다음과 같아:
+- 사용자 관리 (회원가입, 로그인, 프로필)
+- 게시물 작성/수정/삭제/조회 (작성자만 수정/삭제 가능)
+- 댓글 기능
+- 좋아요 기능
+- 페이지네이션과 검색 기능
+```
+
+**Run 버튼 클릭!**
+
+AI가 `requirements.txt` 파일을 생성합니다.
+
+**생성된 파일 예시 (requirements.txt):**
+```
+프로젝트: 블로그 관리 시스템
+
+=== 기능 요구사항 ===
+1. 사용자 관리
+   - 회원가입 (이메일, 비밀번호, 닉네임)
+   - 로그인 (JWT 토큰 발급)
+   - 프로필 조회/수정
+
+2. 게시물 관리
+   - 게시물 작성 (제목, 내용, 카테고리)
+   - 게시물 목록 조회 (페이지네이션, 검색)
+   - 게시물 상세 조회
+   - 게시물 수정 (작성자만)
+   - 게시물 삭제 (작성자만)
+
+3. 댓글 기능
+   - 댓글 작성
+   - 댓글 목록 조회
+   - 댓글 삭제 (작성자만)
+
+4. 좋아요 기능
+   - 게시물에 좋아요/취소
+
+=== 데이터베이스 스키마 ===
+테이블 1: users
+- id (PRIMARY KEY, AUTOINCREMENT)
+- email (UNIQUE, NOT NULL)
+- username (UNIQUE, NOT NULL)
+- password_hash (NOT NULL)
+- bio (TEXT)
+- created_at (DATETIME)
+
+테이블 2: posts
+- id (PRIMARY KEY, AUTOINCREMENT)
+- user_id (FOREIGN KEY -> users.id)
+- title (NOT NULL)
+- content (TEXT, NOT NULL)
+- category (TEXT)
+- view_count (INTEGER, DEFAULT 0)
+- created_at (DATETIME)
+- updated_at (DATETIME)
+
+테이블 3: comments
+- id (PRIMARY KEY, AUTOINCREMENT)
+- post_id (FOREIGN KEY -> posts.id)
+- user_id (FOREIGN KEY -> users.id)
+- content (TEXT, NOT NULL)
+- created_at (DATETIME)
+
+테이블 4: likes
+- id (PRIMARY KEY, AUTOINCREMENT)
+- post_id (FOREIGN KEY -> posts.id)
+- user_id (FOREIGN KEY -> users.id)
+- created_at (DATETIME)
+- UNIQUE(post_id, user_id)
+
+=== API 엔드포인트 ===
+인증:
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/me (인증 필요)
+
+사용자:
+- GET /api/users/:id
+- PUT /api/users/:id (본인만)
+
+게시물:
+- GET /api/posts (공개)
+- GET /api/posts/:id (공개)
+- POST /api/posts (인증 필요)
+- PUT /api/posts/:id (작성자만)
+- DELETE /api/posts/:id (작성자만)
+
+댓글:
+- GET /api/posts/:postId/comments (공개)
+- POST /api/posts/:postId/comments (인증 필요)
+- DELETE /api/comments/:id (작성자만)
+
+좋아요:
+- POST /api/posts/:postId/like (인증 필요)
+- DELETE /api/posts/:postId/like (인증 필요)
+- GET /api/posts/:postId/likes/count (공개)
+
+=== 제약사항 ===
+- 모든 비밀번호는 해시화
+- JWT 토큰 유효기간 7일
+- 게시물 제목 최대 200자
+- 댓글 내용 최대 1000자
+- 페이지네이션 기본 20개
+```
+
+#### 2단계: AI와 함께 요구사항 정의서 검토 및 수정
+
+생성된 요구사항 정의서를 확인하고 필요한 부분을 수정/보완합니다.
+
+**예시: 기능 추가 요청**
+```
+requirements.txt를 보니 좋은데,
+게시물에 태그 기능도 추가하고 싶어.
+그리고 관리자 역할도 추가해줘.
+
+수정해줘:
+1. tags 테이블 추가 (다대다 관계)
+2. users 테이블에 role 컬럼 추가 (user, admin)
+3. 관리자 전용 API 추가 (모든 게시물 삭제 가능)
+```
+
+**Run 버튼 클릭!**
+
+AI가 `requirements.txt`를 업데이트합니다:
+
+```diff
+테이블 1: users
+- id (PRIMARY KEY, AUTOINCREMENT)
+- email (UNIQUE, NOT NULL)
+- username (UNIQUE, NOT NULL)
+- password_hash (NOT NULL)
+- bio (TEXT)
++ role (TEXT, DEFAULT 'user') -- 'user' or 'admin'
+- created_at (DATETIME)
+
++ 테이블 5: tags
++ - id (PRIMARY KEY, AUTOINCREMENT)
++ - name (UNIQUE, NOT NULL)
++ - created_at (DATETIME)
+
++ 테이블 6: post_tags
++ - post_id (FOREIGN KEY -> posts.id)
++ - tag_id (FOREIGN KEY -> tags.id)
++ - PRIMARY KEY (post_id, tag_id)
+
+관리자:
++ - DELETE /api/admin/posts/:id (관리자만)
++ - DELETE /api/admin/users/:id (관리자만)
+```
+
+**예시: 제약사항 보완**
+```
+제약사항을 더 구체적으로 만들어줘.
+- 이메일 형식 검증
+- 비밀번호 최소 길이
+- 게시물 내용 최대 길이
+```
+
+**Run 버튼 클릭!**
+
+AI가 제약사항을 업데이트합니다.
+
+**여러 차례 수정 가능:**
+- "카테고리를 enum으로 제한하고 싶어"
+- "게시물에 이미지 URL 필드 추가해줘"
+- "댓글에 대댓글 기능 추가해줘"
+
+AI와 대화하며 요구사항을 완벽하게 다듬습니다!
+
+#### 3단계: AI에게 전체 API 생성 요청
+
+**AI에게 요청:**
+```
+위의 requirements.txt 내용을 보고
+Cloudflare Workers와 Hono, D1 데이터베이스를 사용해서
+완전한 REST API를 만들어줘.
+
+다음 순서로 진행해줘:
+1. Hono Workers 프로젝트 생성 (blog-api)
+2. D1 데이터베이스 생성 및 연결
+3. migrations 폴더에 스키마 생성
+4. TypeScript 타입 정의 (src/types/)
+5. 인증 미들웨어 구현 (JWT)
+6. 모든 API 엔드포인트 구현
+7. OpenAPI 스펙 자동 생성
+8. 로컬 DB에 테스트 데이터 추가
+
+각 단계마다 명령어를 제안해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 자동으로:
+- 프로젝트 구조 생성
+- 데이터베이스 스키마 생성 (4개 테이블 + 인덱스)
+- 인증 시스템 구현 (회원가입, 로그인, JWT)
+- 모든 CRUD API 구현 (users, posts, comments, likes)
+- 권한 검사 로직 (작성자 확인)
+- 페이지네이션, 검색 기능
+- 에러 처리
+- OpenAPI 문서
+
+**결과:**
+```
+blog-api/
+├── src/
+│   ├── index.ts
+│   ├── routes/
+│   │   ├── auth.ts
+│   │   ├── users.ts
+│   │   ├── posts.ts
+│   │   ├── comments.ts
+│   │   └── likes.ts
+│   ├── middleware/
+│   │   ├── auth.ts
+│   │   └── errorHandler.ts
+│   ├── types/
+│   │   ├── env.ts
+│   │   └── models.ts
+│   └── openapi.ts
+├── migrations/
+│   └── 0001_create_tables.sql
+├── wrangler.toml
+└── package.json
+```
+
+#### 3단계: 바로 테스트
+
+```bash
+# 로컬 서버 실행
+npm run dev
+
+# 회원가입 테스트
+curl -X POST http://localhost:8787/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","username":"testuser","password":"password123"}'
+
+# 게시물 작성 테스트
+curl -X POST http://localhost:8787/api/posts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{"title":"첫 게시물","content":"내용입니다"}'
+```
+
+> **장점:**
+> - 한 번의 요청으로 전체 프로젝트 완성
+> - 모든 엔드포인트가 서로 연결됨
+> - 일관된 코드 스타일
+> - 빠른 프로토타입 제작
+
+### 방법 2: 간단한 프로젝트 예제
+
+**할 일 관리(Todo) API** - 실무에서 바로 사용할 수 있는 수준의 API
+
+**AI에게 전체 프로젝트 요청:**
+```
+Workers와 Hono를 사용해서 할 일 관리 REST API를 만들어줘.
+
+프로젝트 구성:
+1. Hono Workers 프로젝트 생성 (todo-api)
+2. D1 데이터베이스 생성 및 연결
+3. 할 일 테이블 스키마 작성
+
+API 기능:
+- GET /api/todos : 할 일 목록 조회 (페이지네이션)
+- GET /api/todos/:id : 특정 할 일 조회
+- POST /api/todos : 새 할 일 생성
+- PUT /api/todos/:id : 할 일 수정
+- DELETE /api/todos/:id : 할 일 삭제
+- PATCH /api/todos/:id/complete : 완료 처리
+
+추가 기능:
+- API Key 인증
+- 에러 처리
+- CORS 설정
+- 입력 유효성 검사
+
+모든 명령어를 단계별로 제안해줘.
+```
+
+**Run 버튼을 클릭하면서 진행!**
+
+AI가 다음을 자동으로 처리합니다:
+1. 프로젝트 생성
+2. D1 데이터베이스 설정
+3. 스키마 생성 및 적용
+4. TypeScript 타입 정의
+5. 모든 API 엔드포인트 구현
+6. 인증 미들웨어 구현
+7. 에러 핸들링 추가
+
+### 단계별 요청 (선호하는 경우)
+
+한 번에 모든 것을 요청하기 부담스럽다면, 단계별로 나눠서 요청할 수 있습니다:
+
+**1단계: 프로젝트 설정**
+```
+Hono Workers 프로젝트를 만들고 D1 데이터베이스를 연결해줘.
+프로젝트 이름은 todo-api야.
+```
+
+**2단계: 데이터베이스 스키마**
+```
+할 일 관리를 위한 테이블 스키마를 만들어줘.
+필요한 컬럼: id, title, description, completed, priority, created_at, updated_at
+```
+
+**3단계: CRUD API 구현**
+```
+할 일 CRUD API를 구현해줘.
+생성, 조회, 수정, 삭제 기능 모두 포함.
+```
+
+**4단계: 인증 추가**
+```
+API Key 기반 인증을 추가해줘.
+Authorization 헤더로 API Key를 받도록.
+```
+
+**5단계: 페이지네이션**
+```
+할 일 목록 조회에 페이지네이션을 추가해줘.
+limit과 offset 파라미터를 사용해서.
+```
+
+각 단계마다 **Run 버튼 클릭!**
 
 ## 프로젝트 개요
 

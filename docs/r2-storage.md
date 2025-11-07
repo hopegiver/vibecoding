@@ -1,6 +1,78 @@
 # R2 파일 스토리지 사용하기
 
-Cloudflare R2는 S3 호환 오브젝트 스토리지입니다. Hono와 함께 사용하여 파일 업로드/다운로드 시스템을 만들어봅시다.
+Cloudflare R2는 S3 호환 오브젝트 스토리지입니다. AI와 함께라면 파일 업로드 시스템을 쉽게 만들 수 있습니다!
+
+## AI로 R2 파일 스토리지 시작하기
+
+복잡한 파일 처리 로직은 AI에게 맡기세요!
+
+### 1. R2 버킷 생성
+
+**AI에게 요청:**
+```
+Cloudflare R2 버킷을 만들고 싶어.
+wrangler r2 bucket create 명령어를 실행해줘.
+버킷 이름은 my-files로 해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+wrangler r2 bucket create my-files
+```
+
+**Run 버튼 클릭!**
+
+### 2. Workers에 R2 바인딩
+
+**AI에게 요청:**
+```
+방금 만든 R2 버킷을 Workers에 연결해줘.
+wrangler.toml에 바인딩을 추가하고,
+TypeScript 타입도 정의해줘.
+바인딩 이름은 MY_BUCKET으로 해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 자동으로 설정을 완료합니다.
+
+### 3. 파일 업로드 API 만들기
+
+**AI에게 요청:**
+```
+R2 스토리지를 사용하는 파일 업로드 API를 만들어줘.
+
+기능:
+- POST /api/files/upload : 파일 업로드
+- GET /api/files/:filename : 파일 다운로드
+- DELETE /api/files/:filename : 파일 삭제
+- GET /api/files/list : 파일 목록 조회
+
+이미지 파일은 Content-Type을 자동으로 설정해줘.
+에러 처리도 추가해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 완전한 파일 업로드 시스템을 생성합니다!
+
+### 4. 프론트엔드 업로드 폼 만들기
+
+**AI에게 요청:**
+```
+파일 업로드할 수 있는 HTML 폼을 만들어줘.
+index.html 파일에:
+- 파일 선택 input
+- 업로드 버튼
+- 업로드된 파일 목록 표시
+- 각 파일 다운로드/삭제 버튼
+
+예쁘게 스타일링도 해줘.
+```
+
+**Run 버튼 클릭!**
+
+완성! 파일 업로드 시스템이 동작합니다.
 
 ## R2란?
 

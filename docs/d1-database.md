@@ -1,6 +1,301 @@
 # D1 데이터베이스 사용하기
 
-Cloudflare D1은 서버리스 SQL 데이터베이스입니다. Hono와 함께 사용하면 강력한 백엔드를 만들 수 있습니다.
+Cloudflare D1은 서버리스 SQL 데이터베이스입니다. AI와 함께라면 SQL을 몰라도 쉽게 사용할 수 있습니다!
+
+## AI로 D1 데이터베이스 시작하기
+
+SQL이 처음이어도 걱정하지 마세요. AI가 모든 것을 도와줍니다!
+
+### 1. D1 데이터베이스 생성
+
+**AI에게 요청:**
+```
+Cloudflare D1 데이터베이스를 만들고 싶어.
+wrangler d1 create 명령어를 실행해줘.
+데이터베이스 이름은 my-database로 해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+wrangler d1 create my-database
+```
+
+**Run 버튼 클릭!**
+
+터미널에 데이터베이스 ID와 설정이 표시됩니다.
+
+### 2. Workers에 D1 바인딩
+
+**AI에게 요청:**
+```
+방금 만든 D1 데이터베이스를 Workers에 연결해줘.
+wrangler.toml에 바인딩을 추가하고,
+TypeScript 타입도 정의해줘.
+바인딩 이름은 DB로 해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 자동으로 설정 파일을 수정합니다.
+
+### 3. 테이블 스키마 만들기
+
+D1 데이터베이스를 사용하려면 먼저 테이블 구조를 설계해야 합니다. AI가 도와줄 것이지만, 먼저 우리가 무엇을 만들지 정리해봅시다!
+
+#### 3-1. 메모장에서 요구사항 정리하기
+
+코드를 작성하기 전에, **메모장이나 텍스트 편집기**를 열어서 프로그램의 요구사항을 정리합니다.
+
+**메모장에 작성할 내용:**
+
+```
+프로젝트: 사용자 관리 시스템
+
+=== 기능 목록 ===
+1. 사용자 등록
+2. 사용자 정보 조회
+3. 사용자 정보 수정
+4. 사용자 삭제
+
+=== 필요한 데이터 ===
+- 사용자 ID (자동 생성)
+- 이름
+- 이메일 (중복 불가)
+- 가입 날짜 (자동 기록)
+
+=== 제약사항 ===
+- 이메일은 중복될 수 없음
+- 이름은 필수 입력
+- 이메일은 필수 입력
+- ID는 자동으로 증가
+```
+
+> **왜 메모장을 먼저 사용하나요?**
+> - 머릿속 생각을 정리할 수 있습니다
+> - AI에게 명확한 지시를 줄 수 있습니다
+> - 나중에 기능을 추가할 때 참고할 수 있습니다
+
+#### 3-2. AI에게 스키마 생성 요청
+
+메모장에 정리한 내용을 **복사해서** Cursor AI에게 전달합니다.
+
+**AI에게 요청:**
+```
+D1 데이터베이스 테이블 스키마를 만들어줘.
+
+프로젝트: 사용자 관리 시스템
+
+기능:
+- 사용자 등록
+- 사용자 정보 조회
+- 사용자 정보 수정
+- 사용자 삭제
+
+필요한 데이터:
+- 사용자 ID (자동 생성)
+- 이름
+- 이메일 (중복 불가)
+- 가입 날짜 (자동 기록)
+
+제약사항:
+- 이메일은 중복될 수 없음
+- 이름은 필수 입력
+- 이메일은 필수 입력
+
+migrations 폴더에 SQL 파일을 생성해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 `migrations/` 폴더를 만들고 안에 SQL 파일을 생성합니다.
+
+**생성된 파일 예시:**
+```
+migrations/
+  └── 0001_create_users_table.sql
+```
+
+**파일 내용:**
+```sql
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+```
+
+> **Migrations 폴더란?**
+> - 데이터베이스 스키마 변경 이력을 관리하는 폴더입니다
+> - 파일 이름에 번호가 붙어서 순서대로 적용됩니다
+> - 나중에 테이블을 수정할 때도 새 파일을 추가합니다
+
+#### 3-3. 로컬 데이터베이스에 스키마 적용
+
+먼저 개발용 로컬 데이터베이스에 스키마를 적용합니다.
+
+**AI에게 요청:**
+```
+방금 만든 스키마를 로컬 D1 데이터베이스에 적용해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+wrangler d1 execute my-database --local --file=./migrations/0001_create_users_table.sql
+```
+
+**Run 버튼 클릭!**
+
+터미널에 성공 메시지가 나타납니다:
+```
+🌀 Executing on local database my-database from ./migrations/0001_create_users_table.sql
+🚣 Executed 2 commands in 0.123ms
+```
+
+#### 3-4. 프로덕션 데이터베이스에 스키마 적용
+
+이제 실제 서비스용 데이터베이스에도 적용합니다.
+
+**AI에게 요청:**
+```
+같은 스키마를 프로덕션 D1 데이터베이스에도 적용해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+wrangler d1 execute my-database --file=./migrations/0001_create_users_table.sql
+```
+
+**Run 버튼 클릭!**
+
+성공 메시지:
+```
+🌀 Executing on remote database my-database from ./migrations/0001_create_users_table.sql
+🚣 Executed 2 commands in 0.456ms
+```
+
+#### 3-5. Cloudflare 대시보드에서 테이블 확인
+
+스키마가 제대로 적용되었는지 Cloudflare 웹사이트에서 확인합니다.
+
+1. **Cloudflare 대시보드 접속**
+   - [dash.cloudflare.com](https://dash.cloudflare.com) 접속
+   - 로그인
+
+2. **D1 데이터베이스 찾기**
+   - 왼쪽 메뉴에서 **"Workers & Pages"** 클릭
+   - **"D1"** 탭 클릭
+   - **"my-database"** 클릭
+
+3. **테이블 확인**
+   - **"Console"** 탭 클릭
+   - 쿼리 입력창에 다음 입력:
+   ```sql
+   SELECT name FROM sqlite_master WHERE type='table';
+   ```
+   - **"Execute"** 버튼 클릭
+
+4. **결과 확인**
+   ```
+   | name  |
+   |-------|
+   | users |
+   ```
+
+테이블이 보이면 성공! ✅
+
+#### 3-6. 테스트 데이터 추가하기
+
+이제 테스트용 데이터를 넣어봅시다.
+
+**AI에게 요청:**
+```
+users 테이블에 테스트 데이터를 추가해줘.
+
+3명의 사용자:
+1. Alice, alice@example.com
+2. Bob, bob@example.com
+3. Charlie, charlie@example.com
+
+로컬과 프로덕션 데이터베이스 둘 다 추가해줘.
+```
+
+**AI가 제안하는 명령어:**
+```bash
+# seed.sql 파일 생성 후...
+
+# 로컬에 추가
+wrangler d1 execute my-database --local --file=./seed.sql
+
+# 프로덕션에 추가
+wrangler d1 execute my-database --file=./seed.sql
+```
+
+**Run 버튼 클릭!**
+
+성공 메시지:
+```
+🌀 Executing on local database...
+🚣 Inserted 3 rows
+
+🌀 Executing on remote database...
+🚣 Inserted 3 rows
+```
+
+#### 3-7. Cloudflare에서 데이터 확인
+
+데이터가 제대로 들어갔는지 확인합니다.
+
+1. **Cloudflare 대시보드**의 D1 Console로 이동
+
+2. **데이터 조회 쿼리 실행:**
+   ```sql
+   SELECT * FROM users;
+   ```
+
+3. **Execute 버튼 클릭**
+
+4. **결과 확인:**
+   ```
+   | id | name    | email              | created_at          |
+   |----|---------|-------------------|---------------------|
+   | 1  | Alice   | alice@example.com  | 2024-01-15 10:30:00 |
+   | 2  | Bob     | bob@example.com    | 2024-01-15 10:30:00 |
+   | 3  | Charlie | charlie@example.com| 2024-01-15 10:30:00 |
+   ```
+
+데이터가 보이면 완료! 🎉
+
+> **요약: 스키마 생성 흐름**
+> 1. 메모장에 요구사항 정리 ✍️
+> 2. AI에게 스키마 생성 요청 → `migrations/` 폴더에 SQL 파일 생성
+> 3. 로컬 DB에 적용 (개발용)
+> 4. 프로덕션 DB에 적용 (실제 서비스용)
+> 5. Cloudflare 대시보드에서 테이블 확인 ✅
+> 6. AI에게 테스트 데이터 추가 요청
+> 7. Cloudflare 대시보드에서 데이터 확인 ✅
+
+### 4. CRUD API 만들기
+
+**AI에게 요청:**
+```
+D1 데이터베이스를 사용하는 사용자 관리 API를 만들어줘.
+
+기능:
+- POST /api/users : 새 사용자 추가
+- GET /api/users : 모든 사용자 조회
+- GET /api/users/:id : 특정 사용자 조회
+- PUT /api/users/:id : 사용자 정보 수정
+- DELETE /api/users/:id : 사용자 삭제
+
+에러 처리도 추가해줘.
+```
+
+**Run 버튼 클릭!**
+
+AI가 완전한 CRUD API 코드를 생성합니다!
 
 ## D1이란?
 
