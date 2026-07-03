@@ -1,0 +1,8 @@
+# 단일 프로젝트 설정 파일 (모노레포 아님 — packages 목록 없음)
+# pnpm 11부터 아래 설정들이 이 파일로 이동됨
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+# 승인된 transitive 빌드(esbuild)의 postinstall 생략이 install을 exit 1로 만드는
+# pnpm 11.9 동작을 완화. esbuild는 플랫폼 바이너리(@esbuild/darwin-*)로 정상 작동함.
+strictDepBuilds: false

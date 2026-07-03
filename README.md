@@ -144,4 +144,31 @@ AI = 최신 자동 조리기
 
 ---
 
+## 개발 & 배포 (관리자용)
+
+이 사이트는 [Astro](https://astro.build) + [Starlight](https://starlight.astro.build) 정적 사이트 생성기로 빌드됩니다.
+(이전에는 docsify 기반 CSR이었으나 SEO를 위해 SSG로 전환했습니다.)
+
+```bash
+pnpm install     # 의존성 설치
+pnpm dev         # 로컬 개발 서버 (http://localhost:4321)
+pnpm build       # 정적 사이트 빌드 → dist/
+pnpm preview     # 빌드 결과 미리보기
+```
+
+### 문서 추가/수정
+
+- 문서 본문: `src/content/docs/*.md` (각 파일 상단 frontmatter의 `title`·`description`이 SEO 메타로 사용됨)
+- 사이드바 메뉴: `astro.config.mjs`의 `sidebar` 배열
+- 홈페이지: `src/content/docs/index.mdx`
+
+### Cloudflare Pages 배포 설정
+
+- **빌드 명령**: `pnpm build`
+- **빌드 출력 디렉터리**: `dist`
+- **배포 도메인 확정 후** `astro.config.mjs`의 `SITE` 값을 실제 주소로 변경하세요 (sitemap·canonical URL 기준값).
+- 배포 후 [Google Search Console](https://search.google.com/search-console)에 `https://<도메인>/sitemap-index.xml` 등록.
+
+---
+
 **Happy Vibe Coding!**
