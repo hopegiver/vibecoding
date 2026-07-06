@@ -14,10 +14,9 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 ## 🟢 현재 상태
 - Astro Starlight 기반 사이트로 전환 완료, Cloudflare Pages에 배포 중 (main 브랜치 = 배포 소스)
 - `src/content/docs/*.md` 61개 문서 페이지 ↔ `astro.config.mjs` 사이드바 slug 61개 — 일치
-- 작업 트리 클린, 커밋 `2004053` 푸시 완료
-- Google Search Console 소유권 확인은 **메타 태그 방식**(astro.config.mjs `head`)으로 전환 완료 — 서치 콘솔에서 소유권 확인 절차 남음
-- ✅ 메타 태그 최종 확인됨(`be02274` 이후 라이브 반영) — 그냥 평소보다 GitHub 연동 빌드가 오래 걸렸던 것으로 결론
-- `wrangler` CLI가 이미 Cloudflare(info@malgnsoft.com 계정)에 인증돼 있음을 확인. Pages 프로젝트명 `malgn-vibecoding`(GitHub 연동 배포와 별개로 direct upload 가능) — 배포 속도 개선 위해 `pnpm deploy`(로컬 빌드 + `wrangler pages deploy`) 스크립트 추가 여부 사용자 확인 대기 중
+- 작업 트리 클린, 커밋 `cc07c8f` 푸시 완료
+- Google Search Console 소유권 확인은 **메타 태그 방식**(astro.config.mjs `head`)으로 전환 완료, 사이트맵 2개(`sitemap-0.xml`, `sitemap-index.xml`) 제출함 — "가져올 수 없음" 표시돼 재확인 필요(사이트맵 자체는 curl로 정상 200 확인됨, 제출 시점 일시적 실패로 추정)
+- **`pnpm deploy` 추가 완료**: `wrangler` devDependency로 추가, `astro build && wrangler pages deploy dist --project-name=malgn-vibecoding` 스크립트로 로컬 빌드 후 Cloudflare에 직접 업로드 가능(GitHub 연동 배포보다 훨씬 빠름, 테스트 완료 — 약 3초)
 
 ## ✅ 최근 완료
 - docsify → Astro Starlight 전환 (SEO/SSG) — 커밋 `8f6cedd`
@@ -28,13 +27,14 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 - favicon 정사각형 아이콘 교체, 홈 히어로 중복 로고 제거·타이틀 2줄 처리, `javascript-events.md`/`project-calculator.md` 프롬프트 중심 재작성 — 커밋 `2d81be7` (2026-07-06)
 - Google Search Console 사이트 소유권 확인 HTML 추가 — 커밋 `1d0f455` (2026-07-06)
 - Search Console 확인 방식을 메타 태그로 전환(HTML 파일 방식은 Cloudflare Pages 404 이슈로 폐기) — 커밋 `b87d3be` (2026-07-06)
+- `pnpm deploy` 스크립트 추가(wrangler direct upload) — 커밋 `cc07c8f` (2026-07-06)
 
 ## 🚧 진행 중 / 다음
 - 기존 문서 중 소스 코드 위주로 서술된 부분을 프롬프트 중심 설명으로 재작성 (진행 중)
   - ✅ `project-calculator.md`, `javascript-events.md` 완료
   - 🔜 `javascript-intro.md`, `json-file-read.md` 등 추가 후보
-- Cloudflare Pages 배포 반영 확인 (푸시 후 자동 배포)
-- Google Search Console에서 소유권 확인 완료 후 사이트맵 제출 (목표: 구글 검색 노출)
+- Search Console 사이트맵 "가져올 수 없음" 상태 재확인 필요 (삭제 후 재제출 권장했음)
+- `public/robots.txt`에 Sitemap 지시자 추가 여부 (사용자 확인 대기 중, 현재 robots.txt 자체가 404)
 
 ## ⛔ 막힌 것 / 열린 이슈
 - 없음 (Cloudflare Pages 배포 지연 건은 결국 정상 반영되어 해소됨)
