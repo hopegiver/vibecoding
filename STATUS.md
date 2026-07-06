@@ -14,7 +14,8 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 ## 🟢 현재 상태
 - Astro Starlight 기반 사이트로 전환 완료, Cloudflare Pages에 배포 중 (main 브랜치 = 배포 소스)
 - `src/content/docs/*.md` 61개 문서 페이지 ↔ `astro.config.mjs` 사이드바 slug 61개 — 일치
-- 작업 트리 클린, 커밋 `2d81be7` 푸시 완료 (Cloudflare Pages 자동 배포 트리거됨)
+- 작업 트리 클린, 커밋 `1d0f455` 푸시 완료 (Cloudflare Pages 자동 배포 트리거됨)
+- Google Search Console 사이트 소유권 확인 파일(`public/googled1243bb21da16dab.html`) 배포됨 — 서치 콘솔에서 소유권 확인 절차 남음
 
 ## ✅ 최근 완료
 - docsify → Astro Starlight 전환 (SEO/SSG) — 커밋 `8f6cedd`
@@ -23,12 +24,14 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 - Cloudflare Pages 재배포 트리거 — 커밋 `bd78001`
 - 프로젝트 운영 표준 스캐폴드 보완: `STATUS.md`·`CLAUDE.md`·`docs/README.md`·`.claude/doc-drift.json` 생성 (2026-07-03)
 - favicon 정사각형 아이콘 교체, 홈 히어로 중복 로고 제거·타이틀 2줄 처리, `javascript-events.md`/`project-calculator.md` 프롬프트 중심 재작성 — 커밋 `2d81be7` (2026-07-06)
+- Google Search Console 사이트 소유권 확인 HTML 추가 — 커밋 `1d0f455` (2026-07-06)
 
 ## 🚧 진행 중 / 다음
 - 기존 문서 중 소스 코드 위주로 서술된 부분을 프롬프트 중심 설명으로 재작성 (진행 중)
   - ✅ `project-calculator.md`, `javascript-events.md` 완료
   - 🔜 `javascript-intro.md`, `json-file-read.md` 등 추가 후보
 - Cloudflare Pages 배포 반영 확인 (푸시 후 자동 배포)
+- Google Search Console에서 소유권 확인 완료 후 사이트맵 제출 (목표: 구글 검색 노출)
 
 ## ⛔ 막힌 것 / 열린 이슈
 - 없음
