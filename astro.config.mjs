@@ -27,6 +27,15 @@ export default defineConfig({
         { icon: 'external', label: '맑은소프트', href: 'https://www.malgnsoft.com' },
       ],
       customCss: ['./src/styles/custom.css'],
+      head: [
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'google-site-verification',
+            content: 'd5yC82g3M7a2_H7qoHI0YWmn8AckdW0ITsDrZFiAOso',
+          },
+        },
+      ],
       lastUpdated: true,
       pagination: true,
       sidebar: [
