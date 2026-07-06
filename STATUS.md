@@ -16,7 +16,8 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 - `src/content/docs/*.md` 61개 문서 페이지 ↔ `astro.config.mjs` 사이드바 slug 61개 — 일치
 - 작업 트리 클린, 커밋 `2004053` 푸시 완료
 - Google Search Console 소유권 확인은 **메타 태그 방식**(astro.config.mjs `head`)으로 전환 완료 — 서치 콘솔에서 소유권 확인 절차 남음
-- ⚠️ `b87d3be`/`eda27ee` 푸시 후, 재배포 트리거 커밋(`2004053`) 이후로도 5분+ 경과했지만 라이브 사이트에 메타 태그 여전히 미반영 → 단순 빌드 지연이 아니라 **Cloudflare Pages ↔ GitHub 자동 배포 연동 자체 문제**로 추정. Cloudflare API 토큰 없어 대시보드 확인 불가, 사용자가 Cloudflare 대시보드(Workers & Pages → 프로젝트 → Deployments)에서 직접 확인 필요
+- ✅ 메타 태그 최종 확인됨(`be02274` 이후 라이브 반영) — 그냥 평소보다 GitHub 연동 빌드가 오래 걸렸던 것으로 결론
+- `wrangler` CLI가 이미 Cloudflare(info@malgnsoft.com 계정)에 인증돼 있음을 확인. Pages 프로젝트명 `malgn-vibecoding`(GitHub 연동 배포와 별개로 direct upload 가능) — 배포 속도 개선 위해 `pnpm deploy`(로컬 빌드 + `wrangler pages deploy`) 스크립트 추가 여부 사용자 확인 대기 중
 
 ## ✅ 최근 완료
 - docsify → Astro Starlight 전환 (SEO/SSG) — 커밋 `8f6cedd`
@@ -36,4 +37,4 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 - Google Search Console에서 소유권 확인 완료 후 사이트맵 제출 (목표: 구글 검색 노출)
 
 ## ⛔ 막힌 것 / 열린 이슈
-- **Cloudflare Pages 자동 배포 지연/미반영**: `b87d3be`~`2004053` 3개 커밋 푸시했는데도 라이브 사이트에 반영 안 됨(5분+ 경과). GitHub 연동 또는 빌드 실패 의심. 사용자가 Cloudflare 대시보드에서 직접 확인 필요 (Claude는 Cloudflare API 토큰 없음)
+- 없음 (Cloudflare Pages 배포 지연 건은 결국 정상 반영되어 해소됨)
