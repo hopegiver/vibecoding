@@ -14,9 +14,9 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 ## 🟢 현재 상태
 - Astro Starlight 기반 사이트로 전환 완료, Cloudflare Pages에 배포 중 (main 브랜치 = 배포 소스)
 - `src/content/docs/*.md` 61개 문서 페이지 ↔ `astro.config.mjs` 사이드바 slug 61개 — 일치
-- 작업 트리 클린, 커밋 `b87d3be` 푸시 완료 (Cloudflare Pages 자동 배포 트리거됨)
+- 작업 트리 클린, 커밋 `2004053` 푸시 완료
 - Google Search Console 소유권 확인은 **메타 태그 방식**(astro.config.mjs `head`)으로 전환 완료 — 서치 콘솔에서 소유권 확인 절차 남음
-- `public/googled1243bb21da16dab.html`(HTML 파일 방식)은 Cloudflare Pages가 루트 확장자 없는 처리로 404 발생 → 사용 안 함, 삭제 여부 사용자 확인 대기 중
+- ⚠️ `b87d3be`/`eda27ee` 푸시 후 수 분이 지나도 라이브 사이트에 메타 태그 미반영 확인 → 재배포 트리거용 커밋(`2004053`, 안 쓰는 `googled....html` 삭제 겸용) 추가 푸시함. 배포 반영 여부 재확인 필요
 
 ## ✅ 최근 완료
 - docsify → Astro Starlight 전환 (SEO/SSG) — 커밋 `8f6cedd`
