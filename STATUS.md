@@ -14,8 +14,9 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 ## 🟢 현재 상태
 - Astro Starlight 기반 사이트로 전환 완료, Cloudflare Pages에 배포 중 (main 브랜치 = 배포 소스)
 - `src/content/docs/*.md` 61개 문서 페이지 ↔ `astro.config.mjs` 사이드바 slug 61개 — 일치
-- 작업 트리 클린, 커밋 `1d0f455` 푸시 완료 (Cloudflare Pages 자동 배포 트리거됨)
-- Google Search Console 사이트 소유권 확인 파일(`public/googled1243bb21da16dab.html`) 배포됨 — 서치 콘솔에서 소유권 확인 절차 남음
+- 작업 트리 클린, 커밋 `b87d3be` 푸시 완료 (Cloudflare Pages 자동 배포 트리거됨)
+- Google Search Console 소유권 확인은 **메타 태그 방식**(astro.config.mjs `head`)으로 전환 완료 — 서치 콘솔에서 소유권 확인 절차 남음
+- `public/googled1243bb21da16dab.html`(HTML 파일 방식)은 Cloudflare Pages가 루트 확장자 없는 처리로 404 발생 → 사용 안 함, 삭제 여부 사용자 확인 대기 중
 
 ## ✅ 최근 완료
 - docsify → Astro Starlight 전환 (SEO/SSG) — 커밋 `8f6cedd`
@@ -25,6 +26,7 @@ _최종 갱신: 2026-07-06 (auto-pulse)_
 - 프로젝트 운영 표준 스캐폴드 보완: `STATUS.md`·`CLAUDE.md`·`docs/README.md`·`.claude/doc-drift.json` 생성 (2026-07-03)
 - favicon 정사각형 아이콘 교체, 홈 히어로 중복 로고 제거·타이틀 2줄 처리, `javascript-events.md`/`project-calculator.md` 프롬프트 중심 재작성 — 커밋 `2d81be7` (2026-07-06)
 - Google Search Console 사이트 소유권 확인 HTML 추가 — 커밋 `1d0f455` (2026-07-06)
+- Search Console 확인 방식을 메타 태그로 전환(HTML 파일 방식은 Cloudflare Pages 404 이슈로 폐기) — 커밋 `b87d3be` (2026-07-06)
 
 ## 🚧 진행 중 / 다음
 - 기존 문서 중 소스 코드 위주로 서술된 부분을 프롬프트 중심 설명으로 재작성 (진행 중)
