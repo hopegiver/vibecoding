@@ -1,0 +1,16 @@
+{
+  "_help": "문서 서술이 코드와 어긋나는지 자동 대조. label/expected 와 측정법(glob|homeGlob|jsonLength|file+regex) 지정.",
+  "checks": [
+    {
+      "label": "가이드 문서 페이지 수",
+      "expected": 61,
+      "glob": "src/content/docs/*.md"
+    },
+    {
+      "label": "사이드바 slug 등록 수",
+      "expected": 61,
+      "file": "astro.config.mjs",
+      "regex": "slug: '"
+    }
+  ]
+}

@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이브코딩 시작하기 · 맑은소프트</title>
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --brand-deep:#1647C7; --brand:#1E5EFF; --brand-bright:#3D7BFF; --brand-soft:#C9D9FF;
+  --navy-deep:#0B1F3A; --navy:#16335B; --navy-mid:#1F4276;
+  --ink:#0E1726; --ink-2:#3D4861; --ink-3:#6B7488;
+  --canvas:#F6F8FC; --line:#E2E8F2; --white:#FFFFFF;
+  --bad:#D14343; --bad-soft:#FDECEC; --bad-line:#F3C9C9;
+  --good:#1E5EFF; --good-soft:#EEF3FF; --good-line:#D8E3FF;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{background:#e9edf5;}
+body{
+  font-family:var(--sans); color:var(--ink); background:#e9edf5;
+  letter-spacing:-0.015em; line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+
+/* ---- page frame (A4 vertical) ---- */
+.page{
+  width:210mm; min-height:293mm; margin:14px auto; background:#fff;
+  padding:14mm 18mm 10mm; position:relative;
+  display:flex; flex-direction:column;
+  box-shadow:0 4px 24px rgba(11,31,58,.10);
+}
+
+.tnum{font-variant-numeric:tabular-nums;}
+.mono{font-family:var(--mono);letter-spacing:0;}
+
+/* ---- section chrome ---- */
+section{margin-top:24px;}
+section:first-of-type{margin-top:0;}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.28em;
+  color:var(--brand); text-transform:uppercase;
+}
+.s-num{
+  display:inline-grid; place-items:center; width:26px; height:26px; border-radius:8px;
+  background:var(--brand); color:#fff; font-family:var(--mono); font-weight:700; font-size:14px;
+  margin-right:10px; vertical-align:-5px;
+}
+h2{
+  font-size:23px; line-height:1.3; font-weight:800; color:var(--navy);
+  margin:6px 0 4px; letter-spacing:-0.03em;
+}
+.s-lead{font-size:14.5px; color:var(--ink-2); margin:8px 0 18px; max-width:640px;}
+h3{font-size:16px; font-weight:800; color:var(--ink); margin:22px 0 10px; letter-spacing:-0.02em;}
+p{font-size:14px; color:var(--ink-2);}
+.rule{height:1px; background:var(--line); margin:12px 0 0;}
+strong{color:var(--ink); font-weight:700;}
+.hl{color:var(--brand-deep); font-weight:800;}
+
+/* ---- cover ---- */
+.cover{
+  background:linear-gradient(140deg,#0B1F3A 0%,#16335B 55%,#1647C7 130%);
+  color:#fff; padding:0; margin:14px auto; width:210mm; min-height:297mm;
+  box-shadow:0 4px 24px rgba(11,31,58,.10); position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.cover .inner{padding:30mm 20mm; display:flex; flex-direction:column; height:297mm;}
+.cover .brandrow{display:flex; align-items:center; justify-content:space-between;}
+.cover .brandrow img{height:28px; background:#fff; padding:9px 15px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.cover .kicker{
+  font-family:var(--mono); font-size:12px; letter-spacing:0.3em; color:var(--brand-soft);
+  text-transform:uppercase;
+}
+.cover .center{margin-top:auto; margin-bottom:auto;}
+.cover h1{
+  font-size:58px; line-height:1.08; font-weight:800; letter-spacing:-0.045em;
+  margin:0;
+}
+.cover h1 em{font-style:normal; color:var(--brand-bright);}
+.cover .sub{
+  font-size:20px; font-weight:500; color:#DCE6FF; margin-top:22px; letter-spacing:-0.02em;
+}
+.cover .tags{display:flex; gap:10px; margin-top:32px; flex-wrap:wrap;}
+.cover .tag{
+  font-size:13px; font-weight:600; padding:8px 16px; border-radius:999px;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); color:#fff;
+}
+.cover .foot{
+  margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end;
+  font-family:var(--mono); font-size:12px; letter-spacing:0.04em; color:rgba(255,255,255,.62);
+  border-top:1px solid rgba(255,255,255,.18); padding-top:18px;
+}
+.cover .big-quote{
+  font-size:16px; font-weight:600; color:#fff; line-height:1.5; max-width:440px;
+  margin-top:26px; padding-left:16px; border-left:3px solid var(--brand-bright);
+}
+
+/* ---- header running logo ---- */
+.runhead{
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:10px; border-bottom:2px solid var(--brand); margin-bottom:16px;
+}
+.runhead img{height:26px;}
+.runhead .doc{font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--ink-3); text-transform:uppercase;}
+
+/* ---- boxes ---- */
+.box{border-radius:14px; padding:20px 22px; border:1px solid var(--line); background:#fff;}
+.box.tint{background:#EEF3FF; border-color:#D8E3FF;}
+.box.soft{background:var(--canvas);}
+.box.edge{border-left:4px solid var(--brand);}
+.box.navy{background:linear-gradient(135deg,#0B1F3A,#16335B); border:none; color:#fff;}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+
+/* pivot / callout band */
+.pivot{
+  background:linear-gradient(135deg,#1E5EFF,#1647C7); color:#fff;
+  border-radius:16px; padding:20px 28px; margin:16px 0;
+}
+.pivot .q{font-size:19px; font-weight:800; line-height:1.4; letter-spacing:-0.02em;}
+.pivot .a{font-size:14.5px; color:var(--brand-soft); margin-top:10px;}
+
+/* compare cards */
+.cmp{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.cmp .col{border-radius:14px; padding:20px 22px; border:1px solid var(--line);}
+.cmp .col.old{background:#F7F8FA;}
+.cmp .col.new{background:var(--good-soft); border-color:var(--good-line);}
+.cmp .col h4{font-size:15px; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+.cmp .col.old h4{color:var(--ink-2);}
+.cmp .col.new h4{color:var(--brand-deep);}
+.cmp .col .pin{
+  display:inline-grid; place-items:center; width:20px; height:20px; border-radius:6px;
+  font-size:12px; font-weight:800; color:#fff;
+}
+.cmp .col.old .pin{background:var(--ink-3);}
+.cmp .col.new .pin{background:var(--brand);}
+.cmp ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
+.cmp li{font-size:13.5px; color:var(--ink-2); padding-left:16px; position:relative; line-height:1.45;}
+.cmp li::before{content:""; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:50%; background:var(--ink-3);}
+.cmp .col.new li::before{background:var(--brand);}
+
+/* example use-case cards */
+.usecard{
+  border:1px solid var(--line); border-radius:12px; padding:16px 16px; background:#fff;
+  text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.usecard .ic{
+  width:40px; height:40px; border-radius:10px; background:var(--good-soft);
+  display:grid; place-items:center; color:var(--brand-deep); font-weight:800; font-size:17px;
+  font-family:var(--mono);
+}
+.usecard .t{font-size:13.5px; font-weight:700; color:var(--ink);}
+.usecard .d{font-size:11.5px; color:var(--ink-3); line-height:1.4;}
+
+/* reason blist */
+.reasons{display:flex; flex-direction:column; gap:9px;}
+.reason{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start;
+  border:1px solid var(--line); border-radius:12px; padding:12px 18px; background:#fff;}
+.reason .n{width:34px; height:34px; border-radius:9px; background:var(--brand-soft); color:var(--brand-deep);
+  display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:15px;}
+.reason h5{font-size:15px; font-weight:800; color:var(--navy); margin:0 0 3px;}
+.reason p{font-size:13px; color:var(--ink-2); margin:0;}
+
+/* learning-time table */
+.dtable{width:100%; border-collapse:collapse; font-size:13.5px;}
+.dtable th,.dtable td{padding:11px 16px; text-align:left;}
+.dtable td:last-child,.dtable th:last-child{text-align:right; font-variant-numeric:tabular-nums;}
+.dtable thead th{background:var(--navy); color:#fff; font-weight:600; font-size:13px;}
+.dtable thead th:first-child{border-radius:8px 0 0 0;}
+.dtable thead th:last-child{border-radius:0 8px 0 0;}
+.dtable tbody td{border-bottom:1px solid var(--line); color:var(--ink-2);}
+.dtable tbody td:first-child{font-weight:700; color:var(--ink);}
+.dtable tbody tr:nth-child(even){background:var(--canvas);}
+.dtable tbody tr.total{background:#EEF3FF; font-weight:800;}
+.dtable tbody tr.total td{border-bottom:none; color:var(--brand-deep);}
+.dtable .hint{font-size:11.5px; color:var(--ink-3); font-weight:400; display:block;}
+
+/* prep tool cards */
+.prep{display:flex; flex-direction:column; gap:12px;}
+.prepcard{display:grid; grid-template-columns:52px 1fr auto; gap:16px; align-items:center;
+  border:1px solid var(--line); border-radius:14px; padding:16px 20px; background:#fff;}
+.prepcard .badge{width:52px; height:52px; border-radius:12px; display:grid; place-items:center;
+  font-family:var(--mono); font-weight:800; font-size:13px; color:#fff; text-align:center; line-height:1.1;}
+.prepcard .badge.c1{background:linear-gradient(135deg,#1E5EFF,#1647C7);}
+.prepcard .badge.c2{background:linear-gradient(135deg,#16335B,#0B1F3A);}
+.prepcard .badge.c3{background:linear-gradient(135deg,#3D7BFF,#1E5EFF);}
+.prepcard h5{font-size:15.5px; font-weight:800; margin:0;}
+.prepcard h5 .role{font-size:12.5px; font-weight:600; color:var(--ink-3); margin-left:8px;}
+.prepcard p{font-size:12.5px; color:var(--ink-2); margin:3px 0 0;}
+.prepcard .link{font-family:var(--mono); font-size:11px; color:var(--brand); white-space:nowrap;}
+.prepcard .free{display:inline-block; font-size:10.5px; font-weight:700; color:#1a8a5a;
+  background:#E6F6EE; border-radius:5px; padding:2px 7px; margin-left:6px; vertical-align:1px;}
+
+/* flow steps (timeline) */
+.flow{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:16px 0 6px; position:relative;}
+.flowstep{position:relative; padding:0 8px; text-align:center;}
+.flowstep .circ{width:46px; height:46px; border-radius:50%; margin:0 auto 12px;
+  background:#fff; border:2px solid var(--brand); color:var(--brand-deep);
+  display:grid; place-items:center; font-family:var(--mono); font-weight:800; font-size:18px; position:relative; z-index:2;}
+.flow::before{content:""; position:absolute; top:23px; left:12.5%; right:12.5%; height:2px;
+  background:var(--brand-soft); z-index:1;}
+.flowstep h5{font-size:14px; font-weight:800; color:var(--navy); margin:0 0 4px;}
+.flowstep p{font-size:11.5px; color:var(--ink-3); line-height:1.4; margin:0;}
+.flowstep .app{font-family:var(--mono); font-size:10.5px; color:var(--brand); font-weight:700; margin-top:5px;}
+
+/* code / prompt boxes */
+.codebox{
+  font-family:var(--mono); font-size:12.5px; line-height:1.6; color:var(--ink);
+  background:var(--canvas); border:1px solid var(--line); border-radius:10px;
+  padding:14px 16px; white-space:pre-wrap; letter-spacing:0;
+}
+.codebox.bad{background:var(--bad-soft); border-color:var(--bad-line); color:#7a2020;}
+.codebox.good{background:var(--good-soft); border-color:var(--good-line); color:var(--brand-deep);}
+.qlabel{font-size:12.5px; font-weight:800; margin-bottom:7px; display:flex; align-items:center; gap:7px;}
+.qlabel .tag{display:inline-grid; place-items:center; width:18px; height:18px; border-radius:5px; color:#fff; font-size:12px; font-weight:800;}
+.qlabel.bad{color:var(--bad);}
+.qlabel.bad .tag{background:var(--bad);}
+.qlabel.good{color:var(--brand-deep);}
+.qlabel.good .tag{background:var(--brand);}
+
+/* five elements chips */
+.five{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:6px;}
+.fivechip{border:1px solid var(--good-line); background:var(--good-soft); border-radius:10px;
+  padding:12px 8px; text-align:center;}
+.fivechip .k{font-family:var(--mono); font-size:11px; font-weight:700; color:var(--brand);}
+.fivechip .v{font-size:12px; font-weight:700; color:var(--ink); margin-top:4px;}
+
+/* numbered practice steps */
+.psteps{display:flex; flex-direction:column; gap:10px;}
+.pstep{display:grid; grid-template-columns:36px 1fr; gap:14px; align-items:start;
+  border:1px solid var(--line); border-radius:12px; padding:14px 18px; background:#fff;}
+.pstep .n{width:36px; height:36px; border-radius:9px; background:var(--brand); color:#fff;
+  display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:15px;}
+.pstep h5{font-size:14.5px; font-weight:800; color:var(--ink); margin:0 0 2px;}
+.pstep p{font-size:12.5px; color:var(--ink-2); margin:0;}
+.pstep .kbd{font-family:var(--mono); font-size:11px; background:#eef1f6; border:1px solid var(--line);
+  border-radius:4px; padding:1px 6px; color:var(--ink-2);}
+
+/* UI label chip (button/menu names user clicks) */
+.ui{display:inline-block; font-family:var(--sans); font-size:11.5px; font-weight:700;
+  background:#EEF3FF; border:1px solid #D8E3FF; border-radius:6px; padding:1px 8px;
+  color:var(--brand-deep); letter-spacing:-0.01em; vertical-align:1px; white-space:nowrap;}
+.ui.menu{background:#F1F4F9; border-color:var(--line); color:var(--ink);}
+.key{display:inline-block; font-family:var(--mono); font-size:10.5px; font-weight:600;
+  background:#0E1726; border:1px solid #0E1726; border-radius:5px; padding:2px 7px;
+  color:#fff; letter-spacing:0; vertical-align:1px; white-space:nowrap;}
+
+/* STEP block (grouped hands-on, break-inside avoid) */
+.stepblock{border:1px solid var(--line); border-radius:16px; padding:18px 20px 20px;
+  background:#fff; margin-bottom:16px;}
+.stepblock .shead{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+.stepblock .sbadge{display:inline-grid; place-items:center; min-width:78px; height:30px; padding:0 12px;
+  border-radius:999px; background:linear-gradient(135deg,#1E5EFF,#1647C7); color:#fff;
+  font-family:var(--mono); font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap;}
+.stepblock .stitle{font-size:16px; font-weight:800; color:var(--navy); letter-spacing:-0.02em;}
+.stepblock ol{list-style:none; counter-reset:si; display:flex; flex-direction:column; gap:9px;}
+.stepblock ol li{counter-increment:si; position:relative; padding-left:30px; font-size:13px;
+  color:var(--ink-2); line-height:1.5;}
+.stepblock ol li::before{content:counter(si); position:absolute; left:0; top:0;
+  width:21px; height:21px; border-radius:6px; background:var(--brand-soft); color:var(--brand-deep);
+  font-family:var(--mono); font-weight:700; font-size:11px; display:grid; place-items:center;}
+.stepblock ol li strong{color:var(--ink);}
+.stepblock .note{margin-top:12px; font-size:11.5px; color:var(--ink-3);
+  background:var(--canvas); border-radius:8px; padding:9px 12px; border:1px solid var(--line);}
+.stepblock .note strong{color:var(--brand-deep);}
+.stepblock .done{margin-top:12px; font-size:13px; font-weight:800; color:var(--brand-deep);
+  background:var(--good-soft); border:1px solid var(--good-line); border-radius:8px; padding:9px 14px;}
+
+/* help / faq */
+.faq{display:flex; flex-direction:column; gap:12px;}
+.faqitem{border-left:4px solid var(--brand); background:var(--canvas); border-radius:0 10px 10px 0; padding:14px 18px;}
+.faqitem .qq{font-size:14px; font-weight:800; color:var(--navy); margin-bottom:5px;}
+.faqitem .aa{font-size:13px; color:var(--ink-2);}
+
+/* footer note */
+.page-foot{
+  margin-top:auto; padding-top:10px; border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:11px; color:var(--ink-3); letter-spacing:0.04em;
+}
+.next-band{
+  background:linear-gradient(135deg,#0B1F3A,#16335B); color:#fff; border-radius:16px;
+  padding:24px 28px; margin-top:20px;
+}
+.next-band h4{font-size:17px; font-weight:800; margin:0 0 8px;}
+.next-band p{font-size:13.5px; color:#C9D9FF; margin:0;}
+.next-band .cta{
+  display:inline-block; margin-top:14px; background:var(--brand-bright); color:#fff;
+  font-size:13.5px; font-weight:700; padding:10px 20px; border-radius:999px;
+}
+
+.callout-note{font-size:12px; color:var(--ink-3); margin-top:10px; font-style:normal;}
+.tiny{font-size:11.5px; color:var(--ink-3);}
+
+/* ---- print / PDF ---- */
+@page{ size:A4; margin:0; }
+@media print{
+  html,body{background:#fff;}
+  .page{
+    margin:0; box-shadow:none; width:210mm; min-height:293mm; max-height:293mm;
+    page-break-after:always; break-after:page; overflow:hidden;
+  }
+  .cover{
+    margin:0; box-shadow:none; width:210mm; min-height:297mm;
+    page-break-after:always; break-after:page;
+  }
+  .cover .inner{height:297mm;}
+  .box,.pivot,.cmp,.reason,.prepcard,.pstep,.faqitem,.usecard,.next-band,.flow,.dtable,.stepblock{break-inside:avoid;}
+  h2,h3{break-after:avoid;}
+  .pivot,.next-band,.cover,.prepcard .badge,.usecard .ic,.reason .n,.pstep .n,.flowstep .circ,.dtable thead th,.cover .tag,
+  .stepblock .sbadge,.stepblock ol li::before,.stepblock .done,.ui,.ui.menu,.key,.box.navy,.s-num{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  a{color:inherit; text-decoration:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="cover">
+  <div class="inner">
+    <div class="brandrow">
+      <span class="kicker">맑은소프트 사내 가이드 · 2026</span>
+    </div>
+
+    <div class="center">
+      <div class="eyebrow" style="color:var(--brand-soft);margin-bottom:18px;">START HERE</div>
+      <h1>바이브코딩<br><em>시작하기</em></h1>
+      <div class="sub">비개발자도 30분이면 나만의 웹사이트를</div>
+      <div class="big-quote">"AI가 95%를 해줍니다.<br>나머지 5%만 알면, 누구나 만들 수 있습니다."</div>
+      <div class="tags">
+        <span class="tag">코딩 경험 0도 OK</span>
+        <span class="tag">시작은 무료 · Claude는 구독 필요</span>
+        <span class="tag">영어 몰라도 OK</span>
+      </div>
+      <p style="font-size:12.5px; color:rgba(255,255,255,.66); margin-top:16px; letter-spacing:-0.01em;">※ "30분"은 만들기 실습(STEP 1~3) 기준입니다. 인터넷 공개(STEP 4~5)와 첫 설치·계정 가입 시간은 별도예요.</p>
+    </div>
+
+    <div class="foot">
+      <span>맑은소프트 · MALGNSOFT</span>
+      <span>전 직원 대상 · 읽는 데 15분</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 1 : 정의 + 비유 + 비교 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">WHAT IS IT</div>
+    <h2><span class="s-num">1</span>바이브코딩이란?</h2>
+    <p class="s-lead">한 문장으로 말하면 이렇습니다.</p>
+
+    <div class="box tint edge" style="margin-bottom:6px;">
+      <p style="font-size:16.5px; color:var(--navy); font-weight:700; line-height:1.5;">
+        바이브코딩(Vibe Coding)은 <span class="hl">AI에게 말로 부탁해서</span> 웹사이트나 간단한 프로그램을 만드는 새로운 방식입니다.
+      </p>
+      <p style="margin-top:8px;">"이런 걸 만들고 싶어"라고 한국어로 이야기하면, AI가 필요한 코드를 대신 써 줍니다. 마음에 안 들면 다시 "이렇게 바꿔줘"라고 말하면 됩니다.</p>
+    </div>
+
+    <h3>요리에 비유하면</h3>
+    <div class="box navy">
+      <div class="grid3" style="gap:22px;">
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--brand-soft);letter-spacing:0.1em;">AI</div>
+          <div style="font-size:15px;font-weight:800;margin-top:5px;">최신 자동 조리기</div>
+          <p style="color:#C9D9FF;font-size:12.5px;margin-top:5px;">버튼 하나로 요리를 뚝딱 만들어 줍니다.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--brand-soft);letter-spacing:0.1em;">나의 역할</div>
+          <div style="font-size:15px;font-weight:800;margin-top:5px;">재료·레시피 이해</div>
+          <p style="color:#C9D9FF;font-size:12.5px;margin-top:5px;">뭘 넣을지, 맛이 이상하면 뭘 고칠지 알아야 합니다.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--brand-soft);letter-spacing:0.1em;">결과</div>
+          <div style="font-size:15px;font-weight:800;margin-top:5px;">원하는 요리 완성</div>
+          <p style="color:#C9D9FF;font-size:12.5px;margin-top:5px;">조리기에 정확히 설명할수록 결과가 좋아집니다.</p>
+        </div>
+      </div>
+    </div>
+    <p class="callout-note">아무리 좋은 자동 조리기가 있어도, 원하는 요리를 설명할 줄은 알아야겠죠. 바이브코딩도 똑같습니다.</p>
+
+    <h3>기존 방식 vs 바이브코딩</h3>
+    <div class="cmp">
+      <div class="col old">
+        <h4><span class="pin">＝</span>기존 코딩</h4>
+        <ul>
+          <li>문법을 외우고 모든 코드를 직접 작성</li>
+          <li>에러가 나면 검색하며 해결책 찾기</li>
+          <li>배우는 데 시간이 오래 걸림</li>
+          <li>개발자가 아니면 시작하기 어려움</li>
+        </ul>
+      </div>
+      <div class="col new">
+        <h4><span class="pin">＋</span>바이브코딩</h4>
+        <ul>
+          <li>AI에게 "이런 걸 만들고 싶어"라고 말하면 끝</li>
+          <li>에러가 나면 AI가 바로 해결 방법 제시</li>
+          <li>몇 시간이면 실제 웹사이트 완성 가능</li>
+          <li>비개발자도 오늘 바로 시작 가능</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>01</span></div>
+</div>
+
+<!-- ===================== PAGE 2 : 만들 수 있는 것 + 왜 기본 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">WHAT YOU CAN MAKE</div>
+    <h2><span class="s-num">2</span>이런 걸 만들 수 있어요</h2>
+    <p class="s-lead">거창한 앱이 아니어도 좋습니다. 업무에 바로 쓸 수 있는 것부터 시작하세요.</p>
+
+    <div class="grid4">
+      <div class="usecard"><div class="ic">회</div><div class="t">회사 소개 페이지</div><div class="d">우리 팀·서비스 소개</div></div>
+      <div class="usecard"><div class="ic">카</div><div class="t">제품 카탈로그</div><div class="d">제품·가격 한눈에</div></div>
+      <div class="usecard"><div class="ic">Q</div><div class="t">FAQ 페이지</div><div class="d">자주 묻는 질문 정리</div></div>
+      <div class="usecard"><div class="ic">설</div><div class="t">설문·신청 폼</div><div class="d">간단한 접수 받기</div></div>
+    </div>
+    <div class="grid4" style="margin-top:12px;">
+      <div class="usecard"><div class="ic">포</div><div class="t">포트폴리오</div><div class="d">나·팀의 작업 소개</div></div>
+      <div class="usecard"><div class="ic">명</div><div class="t">직원 명부</div><div class="d">부서·연락처 목록</div></div>
+      <div class="usecard"><div class="ic">랜</div><div class="t">이벤트 랜딩</div><div class="d">행사·캠페인 안내</div></div>
+      <div class="usecard"><div class="ic">대</div><div class="t">간단 대시보드</div><div class="d">숫자·현황 보기</div></div>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>02</span></div>
+</div>
+
+<!-- ===================== PAGE 3 : 왜 기본을 알면 좋을까 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">WHY BASICS MATTER</div>
+    <h2><span class="s-num">3</span>왜 AI 시대에도 기본을 알면 좋을까</h2>
+    <p class="s-lead">"AI가 다 해준다는데, 왜 조금이라도 알아야 하나요?" 자주 나오는 질문입니다.</p>
+
+    <div class="pivot">
+      <div class="q">기본을 조금만 알면, AI를 10배 더 잘 씁니다.</div>
+      <div class="a">전부 배우자는 게 아닙니다. AI에게 정확히 부탁하고, 결과를 이해할 만큼만 알면 됩니다.</div>
+    </div>
+
+    <div class="reasons">
+      <div class="reason">
+        <div class="n">1</div>
+        <div><h5>AI에게 정확하게 부탁할 수 있어요</h5>
+        <p>"예쁘게 만들어줘"보다 "제목은 크게, 버튼은 파란색으로"처럼 구체적으로 말하면 원하는 결과가 나옵니다.</p></div>
+      </div>
+      <div class="reason">
+        <div class="n">2</div>
+        <div><h5>작은 부분은 직접 고칠 수 있어요</h5>
+        <p>색만 바꾸고 싶은데 AI가 엉뚱한 곳을 건드릴 때, 기본을 알면 5초 만에 직접 고칩니다.</p></div>
+      </div>
+      <div class="reason">
+        <div class="n">3</div>
+        <div><h5>문제가 생겨도 당황하지 않아요</h5>
+        <p>에러 메시지의 뜻을 대략 이해하면, AI에게 "여기가 문제 같아"라고 정확히 다시 물어볼 수 있습니다.</p></div>
+      </div>
+      <div class="reason">
+        <div class="n">4</div>
+        <div><h5>조금씩 발전시킬 수 있어요</h5>
+        <p>매번 처음부터 다시 만들 필요 없이, 필요한 부분만 손보며 점점 완성도를 높입니다.</p></div>
+      </div>
+    </div>
+
+    <h3>필요한 공부는 딱 하루 (총 3시간)</h3>
+    <table class="dtable">
+      <thead><tr><th>배우는 것</th><th>무엇인가요</th><th>걸리는 시간</th></tr></thead>
+      <tbody>
+        <tr><td>HTML</td><td>웹페이지의 뼈대<span class="hint">제목·글·이미지의 자리</span></td><td>30분</td></tr>
+        <tr><td>CSS</td><td>디자인(색·크기·배치)<span class="hint">겉모습을 꾸미는 것</span></td><td>1시간</td></tr>
+        <tr><td>JavaScript</td><td>동작·기능<span class="hint">버튼을 누르면 일어나는 일</span></td><td>1시간</td></tr>
+        <tr><td>JSON</td><td>데이터 정리 형식<span class="hint">목록·정보를 담는 상자</span></td><td>30분</td></tr>
+        <tr class="total"><td>합계</td><td>평생 AI를 잘 쓰기 위한 최소 지식</td><td>3시간</td></tr>
+      </tbody>
+    </table>
+    <p class="callout-note">이 문서는 이 중 "HTML로 첫 페이지 만들기"까지 안내합니다. 나머지는 만들면서 자연스럽게 익히게 됩니다.</p>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>03</span></div>
+</div>
+
+<!-- ===================== PAGE 3 : 준비물 + 전체 흐름 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">WHAT YOU NEED</div>
+    <h2><span class="s-num">4</span>준비물 딱 4가지 (대부분 무료로 시작)</h2>
+    <p class="s-lead">각각 한 번만 준비해 두면 됩니다. 대부분 무료로 시작할 수 있습니다(Claude만 유료 구독 필요).</p>
+
+    <div class="box tint edge" style="margin-bottom:16px; padding:14px 18px;">
+      <p style="font-size:13.5px; color:var(--navy); font-weight:700;"><span class="free" style="color:#1647C7;background:#EEF3FF;">TIP</span> &nbsp;계정 3개(Claude · GitHub · Cloudflare) 모두 <span class="hl">쓰던 구글 계정 하나로</span> 로그인하면 가장 쉽습니다.</p>
+    </div>
+
+    <div class="prep">
+      <div class="prepcard">
+        <div class="badge c1">VS<br>Code</div>
+        <div>
+          <h5>VS Code<span class="role">코드 편집 프로그램 · Microsoft</span><span class="free">무료</span></h5>
+          <p>코드를 편집하는 무료 프로그램. 여기에 아래의 Claude Code를 설치해서 씁니다. 내려받을 때 <span class="ui">Download for Windows</span>를 누르세요. <strong>버전 1.98 이상</strong> 필요 — 메뉴 <span class="ui menu">도움말(Help)</span> → <span class="ui menu">정보(About)</span>에서 확인.</p>
+        </div>
+        <span class="link">code.visualstudio.com</span>
+      </div>
+      <div class="prepcard">
+        <div class="badge c1" style="background:linear-gradient(135deg,#D97706,#B45309);">Claude<br>Code</div>
+        <div>
+          <h5>Claude Code<span class="role">AI 코딩 도우미 · Anthropic</span><span class="free" style="color:#B45309;background:#FEF3E2;">설치 무료·사용은 구독</span></h5>
+          <p>VS Code 안에 설치하는 AI. 말로 부탁하면 파일을 직접 만들고 고쳐 줍니다. 한국어 완벽 지원. 사용하려면 <strong>Claude Pro 구독</strong>(권장) 또는 <span class="mono">console.anthropic.com</span> 계정이 필요합니다. Node.js 설치는 필요 없고 확장만으로 동작합니다. <span class="free" style="color:#1647C7;background:#EEF3FF;">로그인은 구글 계정도 가능</span></p>
+        </div>
+        <span class="link">확장에서 설치</span>
+      </div>
+      <div class="prepcard">
+        <div class="badge c2">GitHub</div>
+        <div>
+          <h5>GitHub<span class="role">코드 저장소(인터넷 창고)</span><span class="free">무료</span></h5>
+          <p>만든 파일을 인터넷에 보관하는 창고. <strong>구글 계정으로 가입·로그인</strong>할 수 있습니다(github.com/signup에서 <span class="ui">Continue with Google</span>). 이메일 주소로 가입도 가능합니다.</p>
+        </div>
+        <span class="link">github.com/signup</span>
+      </div>
+      <div class="prepcard">
+        <div class="badge c3">Cloud<br>flare</div>
+        <div>
+          <h5>Cloudflare<span class="role">웹사이트 게시(인터넷에 공개)</span><span class="free">무료</span></h5>
+          <p>만든 페이지에 실제 인터넷 주소를 붙여 전 세계에 공개해 줍니다. 가입 화면의 <span class="ui">Sign up with Google</span>로 <strong>쓰던 구글 계정으로 클릭 한 번에 가입</strong>이 가장 쉽습니다(Apple 계정도 가능).</p>
+        </div>
+        <span class="link">dash.cloudflare.com/sign-up</span>
+      </div>
+    </div>
+    <p class="callout-note">VS Code + Claude Code만 있으면 첫 페이지를 만드는 실습(STEP 1~3)까지 끝까지 할 수 있습니다. GitHub·Cloudflare는 "인터넷에 공개"하는 STEP 4~5에서 필요합니다. 또한 <strong>STEP 4(공개)부터는 'Git' 설치가 필요</strong>합니다(<span class="mono">git-scm.com/download/win</span>, 처음 1회만).</p>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>04</span></div>
+</div>
+
+<!-- ===================== PAGE : 전체 흐름 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">THE BIG PICTURE</div>
+    <h2><span class="s-num">5</span>전체 흐름은 4단계</h2>
+    <p class="s-lead">복잡해 보여도, 실제로는 이 네 칸을 왼쪽에서 오른쪽으로 지나가는 것뿐입니다.</p>
+
+    <div class="flow">
+      <div class="flowstep">
+        <div class="circ">1</div>
+        <h5>개발</h5>
+        <p>AI와 대화하며 페이지를 만든다</p>
+        <div class="app">VS Code + Claude Code</div>
+      </div>
+      <div class="flowstep">
+        <div class="circ">2</div>
+        <h5>미리보기</h5>
+        <p>더블클릭 또는 Live Server로 확인</p>
+        <div class="app">내 브라우저</div>
+      </div>
+      <div class="flowstep">
+        <div class="circ">3</div>
+        <h5>업로드</h5>
+        <p>완성된 파일을 창고에 올린다</p>
+        <div class="app">GitHub</div>
+      </div>
+      <div class="flowstep">
+        <div class="circ">4</div>
+        <h5>자동 게시</h5>
+        <p>인터넷 주소가 생기고 공개된다</p>
+        <div class="app">Cloudflare</div>
+      </div>
+    </div>
+
+    <div class="box tint edge" style="margin-top:16px;">
+      <p style="font-size:14.5px; color:var(--navy); font-weight:700;">한 번 연결해 두면, 그다음부터는 <span class="hl">수정 → 업로드</span>만 하면 됩니다.</p>
+      <p style="margin-top:5px;">GitHub에 올리는 순간 Cloudflare가 알아서 웹사이트를 새로 고쳐 줍니다. 복잡한 서버 설정이나 FTP 같은 건 몰라도 됩니다.</p>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>05</span></div>
+</div>
+
+<!-- ===================== PAGE 6 : 잘 물어보는 법 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">HOW TO ASK AI</div>
+    <h2><span class="s-num">6</span>AI에게 잘 물어보는 법</h2>
+    <p class="s-lead">바이브코딩의 실력은 "질문 실력"입니다. 같은 AI라도 어떻게 부탁하느냐에 따라 결과가 완전히 달라집니다.</p>
+
+    <div class="pivot">
+      <div class="q">AI는 "알아서 잘"을 모릅니다. 구체적으로 말한 만큼 정확히 만들어 줍니다.</div>
+      <div class="a">아래 두 질문을 비교해 보세요. 오른쪽처럼 부탁하는 습관만 들이면 됩니다.</div>
+    </div>
+
+    <h3>예시 1 · 웹페이지 만들기</h3>
+    <div class="grid2">
+      <div>
+        <div class="qlabel bad"><span class="tag">✕</span>이렇게 물으면 (나쁜 질문)</div>
+        <div class="codebox bad">웹사이트 만들어줘</div>
+      </div>
+      <div>
+        <div class="qlabel good"><span class="tag">✓</span>이렇게 물으면 (좋은 질문)</div>
+        <div class="codebox good">카페 메뉴판 웹페이지 만들어줘.
+- 카페 이름과 로고
+- 메뉴 3개 (아메리카노 4,500원,
+  라떼 5,000원, 케이크 6,000원)
+- 영업시간 (10:00 - 22:00)
+- 전화번호
+깔끔하고 심플한 디자인으로</div>
+      </div>
+    </div>
+
+    <h3>예시 2 · 디자인 다듬기</h3>
+    <div class="grid2">
+      <div>
+        <div class="qlabel bad"><span class="tag">✕</span>나쁜 질문</div>
+        <div class="codebox bad">예쁘게 만들어줘</div>
+      </div>
+      <div>
+        <div class="qlabel good"><span class="tag">✓</span>좋은 질문</div>
+        <div class="codebox good">버튼을 파란색 배경에 흰색 글씨로
+만들어줘.
+마우스를 올리면 색이 진해지고,
+클릭하면 약간 눌리는 효과 추가해줘.</div>
+      </div>
+    </div>
+
+    <h3>좋은 질문의 5가지 요소</h3>
+    <div class="five">
+      <div class="fivechip"><div class="k">01</div><div class="v">목적을<br>명확히</div></div>
+      <div class="fivechip"><div class="k">02</div><div class="v">필요한 것<br>나열</div></div>
+      <div class="fivechip"><div class="k">03</div><div class="v">예시<br>보여주기</div></div>
+      <div class="fivechip"><div class="k">04</div><div class="v">조건·제약<br>알려주기</div></div>
+      <div class="fivechip"><div class="k">05</div><div class="v">원하는<br>형식 지정</div></div>
+    </div>
+    <p class="callout-note">팁 · 한 번에 다 요청하지 말고 "① 뼈대부터 → ② 디자인 → ③ 기능"처럼 나눠서 부탁하면 훨씬 잘 나옵니다.</p>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>06</span></div>
+</div>
+
+<!-- ===================== PAGE 7 : 따라 하기 인트로 + STEP 1 + STEP 2 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">STEP BY STEP</div>
+    <h2><span class="s-num">7</span>따라 하기: 처음부터 끝까지</h2>
+    <p class="s-lead">읽기만 하면 남는 게 없습니다. 지금부터 <strong>화면에 보이는 버튼·메뉴 이름 그대로</strong> 5단계를 짚어 갑니다. 빈 폴더에서 시작해 <span class="hl">전 세계에 공개된 내 사이트</span>가 열리는 데까지, 순서대로 그대로 따라오면 됩니다.</p>
+
+    <div class="pivot">
+      <div class="q">외울 것은 없습니다. 이 페이지를 보며 버튼을 하나씩 누르기만 하면 됩니다.</div>
+      <div class="a">STEP 1~3 = 내 컴퓨터에서 페이지 만들기 · STEP 4~5 = 인터넷에 공개하기.</div>
+    </div>
+    <p class="tiny" style="margin:0 0 6px;">* 이 가이드의 단축키는 Windows 기준입니다. <strong>Mac 사용자는 Ctrl 대신 Cmd(⌘)</strong>를 누르세요.</p>
+
+    <div class="stepblock">
+      <div class="shead">
+        <span class="sbadge">STEP 1</span>
+        <span class="stitle">VS Code에 Claude Code 연결하기</span>
+      </div>
+      <ol>
+        <li><strong>VS Code</strong>를 실행합니다.</li>
+        <li>왼쪽 사이드바에서 <span class="ui">확장(Extensions)</span> 아이콘을 클릭합니다. <span class="tiny">(단축키 <span class="key">Ctrl + Shift + X</span>)</span></li>
+        <li>검색창에 <span class="ui">Claude Code</span> 를 입력하고, 발행자가 <strong>Anthropic</strong>인 것을 확인한 뒤 <span class="ui">Install</span> 을 클릭합니다.</li>
+        <li>설치 후 VS Code가 재시작을 권하면 그대로 따릅니다.</li>
+        <li>왼쪽 <span class="ui">활동 표시줄(Activity Bar)의 Spark 아이콘</span>(항상 보임), 또는 오른쪽 아래 <span class="ui">상태 표시줄의 <span class="mono">✱ Claude Code</span></span> 를 클릭하면 패널이 열립니다. <span class="tiny">(파일을 연 뒤에는 편집기 오른쪽 위에도 아이콘이 생깁니다.)</span> 여기서 <span class="ui">Sign in</span> 을 클릭합니다.</li>
+        <li>자동으로 열린 브라우저에서 <strong>claude.com에 로그인</strong>합니다(Claude Pro 구독 계정, <strong>구글 계정으로도 로그인 가능</strong>). 승인하면 VS Code로 자동 복귀 — 연결 끝.</li>
+      </ol>
+      <div class="note"><strong>확인 포인트</strong> · 발행자가 Anthropic이 맞는지 꼭 보세요. 이름만 비슷한 다른 확장이 있을 수 있습니다.</div>
+    </div>
+
+    <div class="stepblock">
+      <div class="shead">
+        <span class="sbadge">STEP 2</span>
+        <span class="stitle">내 작업 폴더 만들고 열기</span>
+      </div>
+      <ol>
+        <li>바탕화면에서 <strong>마우스 우클릭 → 새로 만들기 → 폴더</strong>, 이름을 <span class="ui menu">my-website</span> 로 지어 새 폴더를 만듭니다.</li>
+        <li>VS Code 메뉴에서 <span class="ui menu">File</span> → <span class="ui menu">Open Folder</span> <span class="tiny">(단축키 <span class="key">Ctrl + K</span> <span class="key">Ctrl + O</span>)</span> 를 눌러 <span class="ui menu">my-website</span> 를 선택하고 <span class="ui">폴더 선택</span> 을 클릭합니다.</li>
+        <li>왼쪽 <span class="ui">탐색기(Explorer)</span> 에 폴더가 보이면 준비 완료입니다.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>07</span></div>
+</div>
+
+<!-- ===================== PAGE 8 : STEP 3 (첫 페이지 만들기) ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="stepblock">
+      <div class="shead">
+        <span class="sbadge">STEP 3</span>
+        <span class="stitle">Claude Code에게 첫 페이지 만들게 하기</span>
+      </div>
+      <ol>
+        <li><span class="ui">Spark 아이콘</span> 을 눌러 Claude Code 패널을 엽니다.</li>
+        <li>아래 문장을 그대로 입력창에 붙여넣고 <span class="key">Enter</span> 를 누릅니다. <span class="tiny">(이름·내용은 자유롭게 바꿔도 됩니다.)</span></li>
+      </ol>
+
+      <div class="qlabel good" style="margin:12px 0 6px;"><span class="tag">✓</span>Claude Code에 붙여넣을 문장 (한국어 그대로)</div>
+      <div class="codebox good">자기소개 웹페이지를 index.html 파일 하나로 만들어줘.
+포함: 이름, 사진(플레이스홀더 이미지), 자기소개 3~4줄,
+좋아하는 것 3가지(리스트), 이메일.
+디자인: 깔끔하고 현대적, 중앙 정렬, 파스텔 톤, 모바일에서도 잘 보이게.</div>
+
+      <ol start="3" style="margin-top:14px;">
+        <li>Claude Code가 만들 파일을 <span class="ui">Diff(변경 미리보기)</span> 화면으로 보여줍니다. 아래 <span class="ui">Accept</span> <span class="tiny">(체크 표시)</span> 버튼을 누르면 <span class="mono">index.html</span> 이 실제로 생성됩니다. <span class="tiny">(거절은 <span class="ui menu">Reject</span>)</span></li>
+        <li><span class="ui">파일 탐색기(File Explorer)</span> 에서 <span class="ui menu">index.html</span> 을 더블클릭하면 크롬/엣지에서 내 페이지가 뜹니다. <strong>첫 페이지 완성!</strong></li>
+        <li>고치고 싶으면 패널에 그냥 말로 부탁하고, 매번 <span class="ui">Accept</span> 를 누릅니다.</li>
+      </ol>
+
+      <div class="note" style="border-color:#D8E3FF; background:#EEF3FF;">
+        <strong>더 편한 실시간 미리보기 · Live Server (처음 설정만 1회)</strong><br>
+        1) 왼쪽 <span class="ui">확장(Extensions)</span> <span class="tiny">(<span class="key">Ctrl + Shift + X</span>)</span> 에서 <span class="ui">Live Server</span> 검색 → 발행자 <strong>Ritwick Dey</strong> 확인 후 <span class="ui">Install</span>.<br>
+        2) <span class="mono">index.html</span> 을 연 상태에서 오른쪽 아래 <span class="ui">상태 표시줄의 Go Live 버튼</span> 클릭(또는 편집기에서 우클릭 → <span class="ui menu">Open with Live Server</span>).<br>
+        3) 브라우저가 자동으로 열리고, 이후 <strong>저장(<span class="key">Ctrl + S</span>)하면 화면이 자동 새로고침</strong>됩니다. <span class="tiny">처음 설치만 조금 번거롭지, 이후엔 훨씬 편합니다.</span>
+      </div>
+
+      <div class="grid3" style="margin:10px 0 0;">
+        <div class="codebox good">배경을 연한 파란색으로 바꿔줘</div>
+        <div class="codebox good">사진을 왼쪽에 배치해줘</div>
+        <div class="codebox good">부드럽게 나타나는 효과 넣어줘</div>
+      </div>
+      <div class="done">여기까지 하면 "말로 만들고 → 확인하고 → 고치는" 바이브코딩의 핵심 사이클을 이미 경험한 겁니다.</div>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>08</span></div>
+</div>
+
+<!-- ===================== PAGE 9 : STEP 4 + STEP 5 + 마무리 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">GO LIVE</div>
+    <h2 style="margin-bottom:14px;"><span class="s-num" style="background:var(--navy);">＋</span>이제 인터넷에 공개하기</h2>
+
+    <div class="box tint edge" style="margin-bottom:16px;">
+      <p style="font-size:14px; color:var(--navy); font-weight:700;">STEP 3까지가 "내 컴퓨터 안에서 만들기"입니다.</p>
+      <p style="margin-top:5px;">여기서 멈춰도 페이지는 완성입니다. 지금부터 STEP 4~5는 이 페이지를 <span class="hl">전 세계 누구나 볼 수 있게 인터넷에 공개</span>하는 과정입니다.</p>
+    </div>
+
+    <div class="stepblock">
+      <div class="shead">
+        <span class="sbadge">STEP 4</span>
+        <span class="stitle">GitHub에 올리기 (버튼만으로, 명령어 필요 없음)</span>
+      </div>
+
+      <div class="note" style="border-color:#D8E3FF; background:#EEF3FF; margin-top:0; margin-bottom:14px;">
+        <strong>STEP 4 시작 전 · Git 설치 (Windows, 처음 1회만)</strong><br>
+        GitHub에 올리려면 'Git'이라는 도구가 필요합니다. 윈도우엔 기본으로 없으니 한 번만 설치하세요.<br>
+        1) 브라우저에서 <span class="mono">git-scm.com/download/win</span> 접속 → 다운로드된 설치파일 실행.<br>
+        2) 설치 화면은 <strong>모두 기본값 그대로 <span class="ui">Next</span></strong> 를 눌러 끝까지 진행 → <span class="ui">Install</span>.<br>
+        3) 설치가 끝나면 <strong>VS Code를 완전히 닫았다가 다시 실행</strong>하세요(그래야 Git을 인식합니다).<br>
+        확인: VS Code 아래쪽 터미널(<span class="key">Ctrl + 백틱(`)</span>)에 <span class="mono">git --version</span> 을 입력해 버전 숫자가 나오면 완료입니다.
+      </div>
+
+      <ol>
+        <li>왼쪽 사이드바에서 <span class="ui">소스 제어(Source Control)</span> 아이콘을 클릭합니다. <span class="tiny">(가지 모양, 단축키 <span class="key">Ctrl + Shift + G</span>)</span></li>
+        <li><span class="ui">Publish to GitHub</span> 버튼을 클릭하면, 브라우저가 열려 <strong>GitHub 로그인 &amp; 권한 허용</strong>을 진행합니다(첫 1회만). <span class="tiny">GitHub 계정이 없으면 <span class="mono">github.com/signup</span> 에서 <strong>구글 계정으로(Continue with Google)</strong> 또는 이메일로 먼저 가입.</span></li>
+        <li>저장소 공개 범위를 고르면(공개/비공개 아무거나) 업로드가 시작됩니다.</li>
+        <li>이후 수정할 때마다: 소스 제어 패널의 <span class="ui menu">Message</span> 칸에 간단히 적고(예: "소개 문구 수정") → <span class="ui">Commit</span> → <span class="ui">Sync Changes</span> <span class="tiny">(= 올리기)</span>. 끝.</li>
+      </ol>
+      <div class="note"><strong>더 쉽게</strong> · Claude Code 패널에 "지금 변경사항 GitHub에 올려줘"라고 부탁해도 알아서 처리합니다(익숙해지면 추천).</div>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>09</span></div>
+</div>
+
+<!-- ===================== PAGE 10 : STEP 5 + 마무리 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">GO LIVE</div>
+    <h2 style="margin-bottom:14px;"><span class="s-num" style="background:var(--navy);">＋</span>이제 인터넷에 공개하기 (이어서)</h2>
+
+    <div class="stepblock">
+      <div class="shead">
+        <span class="sbadge">STEP 5</span>
+        <span class="stitle">Cloudflare Pages로 진짜 사이트 열기</span>
+      </div>
+      <ol>
+        <li><span class="mono">dash.cloudflare.com</span> 에 로그인합니다. <span class="tiny">계정이 없으면 가입 화면의 <span class="ui">Sign up with Google</span> 로 쓰던 구글 계정으로 바로 가입(가장 쉬움).</span></li>
+        <li>왼쪽 메뉴 <span class="ui menu">Workers &amp; Pages</span> → <span class="ui">Create</span> 클릭 → 나오는 화면(<span class="mono">Ship something new</span>)을 <strong>맨 아래로 스크롤</strong> → 맨 아래 <strong>“Pages를 배포하려고 하십니까?”</strong> 옆의 <span class="ui">시작</span> 링크를 클릭합니다. <span class="tiny">위쪽 <span class="ui">Continue with GitHub</span> 등은 Workers용이니 누르지 마세요. 예전엔 상단 <strong>Pages 탭</strong>이었지만 지금은 이 맨 아래 링크로 바뀌었습니다.</span></li>
+        <li>이어지는 <strong>“Pages를 시작합니다”</strong> 화면에서 <span class="ui menu">기존 Git 리포지토리 가져오기</span> 옆의 <span class="ui">시작</span> 버튼을 클릭합니다. <span class="tiny">(GitHub 없이 <span class="ui menu">파일 끌어서 놓기</span>로 폴더째 올릴 수도 있지만, 여기선 STEP 4에서 올린 GitHub를 씁니다.)</span></li>
+        <li><span class="ui">Connect GitHub</span> 클릭 → 뜨는 GitHub 화면에서 <span class="ui">Install &amp; Authorize</span> 클릭 → 접근 범위에서 <span class="ui menu">Only select repositories</span> → 방금 올린 <span class="mono">my-website</span> 체크(권장) → Cloudflare로 돌아와 <span class="mono">my-website</span> 를 선택하고 <span class="ui">Begin setup</span> 을 클릭합니다.</li>
+        <li>빌드 설정은 정적 HTML이라 그대로 두면 됩니다 — <span class="ui menu">Framework preset = None</span>, <span class="ui menu">Build command = 비움(또는 <span class="mono">exit 0</span>)</span>, <span class="ui menu">Build output directory = /</span>. → <span class="ui">Save and Deploy</span>.</li>
+        <li>1~2분 뒤 배포가 끝나면 <span class="mono">프로젝트이름.pages.dev</span> 주소가 생깁니다. 클릭하면 <strong>전 세계 누구나 볼 수 있는 내 사이트</strong>가 열립니다!</li>
+      </ol>
+    </div>
+
+    <div class="box navy" style="margin-top:16px;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--brand-soft);letter-spacing:0.14em;">마무리 · 이후엔 이 습관만</div>
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px; font-size:14px; font-weight:800;">
+        <span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:7px 14px;">VS Code에서 수정</span>
+        <span style="color:var(--brand-soft);">→</span>
+        <span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:7px 14px;">Commit → Sync</span>
+        <span style="color:var(--brand-soft);">→</span>
+        <span style="background:var(--brand-bright);border-radius:8px;padding:7px 14px;">Cloudflare가 자동 새로고침</span>
+      </div>
+      <p style="color:#C9D9FF;font-size:13px;margin-top:12px;">FTP도, 서버 설정도 필요 없습니다. 앞으로는 이 흐름만 반복하면 사이트가 계속 최신 상태로 유지됩니다.</p>
+    </div>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · 바이브코딩 시작하기</span><span>10</span></div>
+</div>
+
+<!-- ===================== PAGE 11 : 막히면 + 다음 단계 ===================== -->
+<div class="page">
+  <div class="runhead">
+    <img src="assets/malgnsoft-logo.png" alt="맑은소프트">
+    <span class="doc">바이브코딩 시작하기</span>
+  </div>
+
+  <section>
+    <div class="eyebrow">WHEN YOU GET STUCK</div>
+    <h2><span class="s-num">8</span>막히면 이렇게 / 다음 단계</h2>
+    <p class="s-lead">누구나 막힙니다. 개발자도 마찬가지예요. 중요한 건 "막혔을 때 어떻게 하느냐"입니다.</p>
+
+    <div class="pivot">
+      <div class="q">에러가 나도 괜찮아요. AI에게 그대로 붙여넣고 물어보면 됩니다.</div>
+      <div class="a">빨간 글씨(에러 메시지)가 나와도 겁먹지 마세요. 그게 오히려 가장 빨리 해결되는 상황입니다.</div>
+    </div>
+
+    <div class="faq">
+      <div class="faqitem">
+        <div class="qq">빨간 에러 메시지가 나왔어요</div>
+        <div class="aa">그 메시지를 <strong>그대로 복사해서 AI에게 붙여넣고</strong> "이 에러가 왜 나는지, 어떻게 고치는지 알려줘"라고 물어보세요. 대부분 그 자리에서 해결됩니다.</div>
+      </div>
+      <div class="faqitem">
+        <div class="qq">화면에 아무것도 안 나와요</div>
+        <div class="aa">"내가 원한 건 A인데, 실제로는 B야. 뭐가 문제인지 찾아줘"처럼 <strong>기대한 결과와 실제 결과를 같이</strong> 알려주면 AI가 훨씬 잘 찾습니다.</div>
+      </div>
+      <div class="faqitem">
+        <div class="qq">한글이 깨져 보여요</div>
+        <div class="aa">"한글이 깨져. UTF-8로 고쳐줘"라고 하면 됩니다. 이런 사소한 문제일수록 AI가 즉시 해결해 줍니다.</div>
+      </div>
+      <div class="faqitem">
+        <div class="qq">코드가 너무 복잡해 보여요</div>
+        <div class="aa">"이 코드가 어떻게 동작하는지 초보자도 이해하게 설명해줘" 또는 "더 간단하게 만들어줘"라고 부탁하세요. 이해하며 배우는 게 진짜 실력이 됩니다.</div>
+      </div>
+    </div>
+
+    <div class="next-band">
+      <h4>다음 단계 — 더 배우고 싶다면</h4>
+      <p>이 문서의 STEP 1~5만으로 이미 <strong style="color:#fff;">만들기 → 공개하기</strong>까지 한 바퀴를 돌 수 있습니다. CSS·JavaScript·JSON으로 기능을 더하는 방법은 사내 <strong style="color:#fff;">바이브코딩 가이드북</strong>에 단계별로 정리되어 있습니다.</p>
+      <p style="margin-top:8px;">Workers·D1·API 같은 개발자용 심화 주제도 가이드북에서 다룹니다. 우선은 STEP 1의 확장 설치부터 손으로 해 보세요 — 그게 가장 빠른 길입니다.</p>
+      <span class="cta">가장 작은 첫걸음 · 오늘 VS Code에 Claude Code 확장 설치해 보기</span>
+    </div>
+
+    <p class="callout-note" style="text-align:center; margin-top:22px;">
+      코딩은 재능이 아니라 습관입니다. AI가 곁에 있으니, 이제 당신 차례입니다.
+    </p>
+  </section>
+
+  <div class="page-foot"><span>맑은소프트 · MALGNSOFT · 사내 배포용</span><span>11</span></div>
+</div>
+
+</body>
+</html>

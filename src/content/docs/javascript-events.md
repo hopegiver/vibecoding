@@ -1,447 +1,196 @@
 ---
 title: "버튼 클릭 이벤트 만들기"
-description: "버튼을 클릭했을 때 원하는 동작이 실행되도록 만들어봅시다."
+description: "버튼을 클릭하면 뭔가 일어나는 웹페이지, AI 프롬프트로 30분 만에 만들어봅시다."
 ---
 
-버튼을 클릭했을 때 원하는 동작이 실행되도록 만들어봅시다.
+웹페이지에서 버튼을 누르면 숫자가 올라가고, 사진이 바뀌고, 메뉴가 펼쳐지는 것 — 모두 **이벤트**덕분입니다. 코드를 몰라도 AI에게 원하는 동작을 말로 설명하면 바로 만들 수 있습니다.
 
-## 이벤트란?
+## 이벤트가 뭔가요?
 
-사용자가 웹페이지에서 하는 행동:
-- 버튼 클릭
-- 텍스트 입력
-- 마우스 이동
-- 키보드 입력
-- 페이지 스크롤
+사용자가 웹페이지에서 하는 **모든 행동**이 이벤트입니다.
 
-## 기본 클릭 이벤트
+| 행동 | 이벤트 이름 |
+|------|------------|
+| 버튼 클릭 | 클릭 이벤트 |
+| 글자 입력 | 입력 이벤트 |
+| 마우스 올리기 | 마우스오버 이벤트 |
+| 엔터 키 누르기 | 키보드 이벤트 |
+| 폼 제출 | 제출 이벤트 |
 
-### HTML
-```html
-<button id="myButton">클릭하세요</button>
-<p id="result"></p>
+AI에게 "버튼을 클릭하면 ○○이 일어나게 해줘"라고 하면 됩니다. 어떤 이벤트를 써야 하는지는 AI가 알아서 고릅니다.
+
+---
+
+## 기본 프롬프트 패턴
+
+이벤트를 만들 때 쓰는 기본 말투입니다.
+
+```
+[요소]를 [행동]하면 [결과]가 되도록 만들어줘.
 ```
 
-### JavaScript
-```javascript
-const button = document.getElementById('myButton');
-const result = document.getElementById('result');
+**예시:**
+- "확인 버튼을 클릭하면 '감사합니다!' 문구가 나타나게 해줘"
+- "이름 입력창에 글자를 입력하면 하단에 실시간으로 미리보기가 보이게 해줘"
+- "메뉴 버튼을 클릭하면 목록이 펼쳐지고, 다시 클릭하면 닫히게 해줘"
 
-button.addEventListener('click', function() {
-    result.textContent = "버튼이 클릭되었습니다!";
-});
+---
+
+## 실습 1: 좋아요 버튼 만들기
+
+### 1단계 — AI에게 기본 틀 요청
+
+Cursor에서 새 HTML 파일을 만들고 이 프롬프트를 입력하세요.
+
+```
+좋아요 버튼을 만들어줘.
+- 버튼에는 하트 아이콘과 숫자(처음엔 0)가 표시돼
+- 버튼을 클릭하면 숫자가 1 올라가고 버튼 색이 빨간색으로 바뀌어
+- 다시 클릭하면 숫자가 1 내려가고 원래 회색으로 돌아와
 ```
 
-## 이벤트 리스너 문법
+### 2단계 — 결과 확인
 
-### 기본 형식
-```javascript
-요소.addEventListener('이벤트타입', function() {
-    // 실행할 코드
-});
+AI가 만들어준 파일을 브라우저에서 열어봅니다. 버튼이 의도대로 작동하나요?
+
+### 3단계 — 추가 수정
+
+마음에 안 드는 부분이 있으면 그대로 말하면 됩니다.
+
+```
+버튼 크기가 너무 작아. 더 크게 해줘.
+좋아요 숫자 옆에 "명이 좋아합니다"라는 텍스트도 추가해줘.
 ```
 
-### 화살표 함수 (최신 문법)
-```javascript
-button.addEventListener('click', () => {
-    result.textContent = "클릭!";
-});
+---
+
+## 실습 2: 카운터 (숫자 올리기/내리기)
+
+### 프롬프트
+
+```
+숫자 카운터를 만들어줘.
+- 화면 중앙에 큰 숫자(처음엔 0)가 표시돼
+- +1 버튼(초록), -1 버튼(빨강), 리셋 버튼(파랑) 3개가 있어
+- 각 버튼을 누르면 숫자가 바뀌어
+- 숫자가 0보다 작아지면 빨간색으로 표시해줘
 ```
 
-## 자주 쓰는 이벤트
+### 추가 기능 요청 예시
 
-### 클릭 이벤트
-```javascript
-button.addEventListener('click', () => {
-    console.log("클릭됨");
-});
+```
+숫자가 100을 넘으면 "최대치 도달!" 메시지를 팝업으로 알려줘.
 ```
 
-### 더블클릭
-```javascript
-button.addEventListener('dblclick', () => {
-    console.log("더블클릭됨");
-});
+```
+숫자가 바뀔 때 간단한 애니메이션 효과를 넣어줘 (잠깐 커졌다 작아지는 효과).
 ```
 
-### 마우스 오버
-```javascript
-button.addEventListener('mouseenter', () => {
-    button.style.backgroundColor = "blue";
-});
+---
 
-button.addEventListener('mouseleave', () => {
-    button.style.backgroundColor = "gray";
-});
+## 실습 3: 배경 색상 변경 버튼
+
+### 프롬프트
+
+```
+버튼을 클릭할 때마다 페이지 배경색이 바뀌는 기능을 만들어줘.
+- 빨강, 파랑, 초록, 노랑, 보라 5가지 색상이 순서대로 돌아가며 바뀌어
+- 버튼 텍스트에는 "다음 색상: [다음 색 이름]"이 표시돼
 ```
 
-### 입력 이벤트
-```javascript
-const input = document.getElementById('myInput');
+---
 
-input.addEventListener('input', () => {
-    console.log("현재 값:", input.value);
-});
+## 실습 4: 이름 입력 → 인사 메시지
+
+### 프롬프트
+
+```
+이름을 입력받아 인사 메시지를 보여주는 기능을 만들어줘.
+- 텍스트 입력창과 "인사하기" 버튼이 있어
+- 버튼을 클릭하면 "안녕하세요, [입력한 이름]님!" 메시지가 나타나
+- 입력창이 비어 있으면 버튼이 눌리지 않고 "이름을 먼저 입력해주세요"라는 경고를 보여줘
+- 엔터 키를 눌러도 버튼 클릭과 같은 효과가 나야 해
 ```
 
-### 폼 제출
-```javascript
-const form = document.getElementById('myForm');
+---
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault(); // 페이지 새로고침 방지
-    console.log("폼 제출됨");
-});
+## 실습 5: 열고 닫는 메뉴
+
+### 프롬프트
+
+```
+클릭하면 열리고 닫히는 메뉴를 만들어줘.
+- "메뉴 열기" 버튼이 있어
+- 클릭하면 [홈, 소개, 서비스, 연락처] 메뉴 항목이 아래로 슬라이드되며 나타나
+- 다시 클릭하면 부드럽게 닫혀
+- 버튼 텍스트도 "메뉴 열기" ↔ "메뉴 닫기"로 바뀌어
 ```
 
-### 키보드 이벤트
-```javascript
-input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        console.log("엔터 키 눌림");
-    }
-});
+---
+
+## 자주 쓰는 이벤트 프롬프트 모음
+
+복사해서 바로 사용하세요.
+
+**마우스 올리면 색 변경**
+```
+버튼에 마우스를 올리면 배경색이 파랗게 바뀌고, 마우스를 치우면 원래대로 돌아오게 해줘.
 ```
 
-## 실습 1: 좋아요 버튼
-
-### HTML
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>좋아요 버튼</title>
-    <style>
-        .like-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #ddd;
-        }
-        .like-btn.liked {
-            background-color: #ff6b6b;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <button class="like-btn" id="likeBtn">❤ 좋아요 0</button>
-
-    <script>
-        const likeBtn = document.getElementById('likeBtn');
-        let likes = 0;
-        let isLiked = false;
-
-        likeBtn.addEventListener('click', () => {
-            if (isLiked) {
-                likes--;
-                isLiked = false;
-                likeBtn.classList.remove('liked');
-            } else {
-                likes++;
-                isLiked = true;
-                likeBtn.classList.add('liked');
-            }
-            likeBtn.textContent = `❤ 좋아요 ${likes}`;
-        });
-    </script>
-</body>
-</html>
+**더블클릭**
+```
+이미지를 더블클릭하면 확대 팝업이 뜨게 해줘.
 ```
 
-## 실습 2: 색상 변경 버튼
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>색상 변경</title>
-</head>
-<body>
-    <button id="colorBtn">배경색 변경</button>
-
-    <script>
-        const button = document.getElementById('colorBtn');
-        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7'];
-        let currentIndex = 0;
-
-        button.addEventListener('click', () => {
-            document.body.style.backgroundColor = colors[currentIndex];
-            currentIndex = (currentIndex + 1) % colors.length;
-        });
-    </script>
-</body>
-</html>
+**키보드 엔터 입력**
+```
+검색창에서 엔터를 누르면 검색이 실행되게 해줘.
 ```
 
-## 실습 3: 이미지 토글
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>이미지 토글</title>
-    <style>
-        img {
-            width: 300px;
-            display: block;
-            margin: 20px auto;
-        }
-        button {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-        }
-    </style>
-</head>
-<body>
-    <img id="bulb" src="https://via.placeholder.com/300/808080/FFFFFF?text=OFF" alt="전구">
-    <button id="toggleBtn">켜기/끄기</button>
-
-    <script>
-        const bulb = document.getElementById('bulb');
-        const button = document.getElementById('toggleBtn');
-        let isOn = false;
-
-        button.addEventListener('click', () => {
-            if (isOn) {
-                bulb.src = "https://via.placeholder.com/300/808080/FFFFFF?text=OFF";
-                isOn = false;
-            } else {
-                bulb.src = "https://via.placeholder.com/300/FFFF00/000000?text=ON";
-                isOn = true;
-            }
-        });
-    </script>
-</body>
-</html>
+**폼 제출**
+```
+폼에서 제출 버튼을 클릭하면 페이지가 새로 고침되지 않고, 대신 "제출 완료!" 메시지가 표시되게 해줘.
 ```
 
-## 실습 4: 카운터
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>카운터</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial;
-            padding: 50px;
-        }
-        #count {
-            font-size: 72px;
-            margin: 30px;
-        }
-        button {
-            font-size: 20px;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #increase {
-            background-color: #4CAF50;
-            color: white;
-        }
-        #decrease {
-            background-color: #f44336;
-            color: white;
-        }
-        #reset {
-            background-color: #2196F3;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <h1>카운터</h1>
-    <div id="count">0</div>
-    <button id="increase">+1</button>
-    <button id="decrease">-1</button>
-    <button id="reset">리셋</button>
-
-    <script>
-        const countElement = document.getElementById('count');
-        const increaseBtn = document.getElementById('increase');
-        const decreaseBtn = document.getElementById('decrease');
-        const resetBtn = document.getElementById('reset');
-
-        let count = 0;
-
-        increaseBtn.addEventListener('click', () => {
-            count++;
-            countElement.textContent = count;
-        });
-
-        decreaseBtn.addEventListener('click', () => {
-            count--;
-            countElement.textContent = count;
-        });
-
-        resetBtn.addEventListener('click', () => {
-            count = 0;
-            countElement.textContent = count;
-        });
-    </script>
-</body>
-</html>
+**스크롤 감지**
+```
+페이지를 100px 이상 스크롤하면 "맨 위로" 버튼이 나타나고, 클릭하면 화면 최상단으로 이동하게 해줘.
 ```
 
-## 실습 5: 메뉴 토글
+---
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>메뉴 토글</title>
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            padding: 20px;
-        }
-        #menuBtn {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #menu {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-            display: none;
-        }
-        #menu.show {
-            display: block;
-        }
-        #menu li {
-            padding: 10px;
-            background-color: #f0f0f0;
-            margin-bottom: 5px;
-        }
-    </style>
-</head>
-<body>
-    <button id="menuBtn">메뉴 열기/닫기</button>
-    <ul id="menu">
-        <li>홈</li>
-        <li>소개</li>
-        <li>서비스</li>
-        <li>연락처</li>
-    </ul>
+## 이벤트가 작동하지 않을 때
 
-    <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const menu = document.getElementById('menu');
+코드를 모르더라도 AI에게 증상을 설명하면 고칠 수 있습니다.
 
-        menuBtn.addEventListener('click', () => {
-            menu.classList.toggle('show');
-        });
-    </script>
-</body>
-</html>
+### 프롬프트 템플릿
+
+```
+[버튼/기능]이 클릭해도 아무 반응이 없어.
+뭐가 문제인지 찾아서 고쳐줘.
 ```
 
-## 이벤트 객체
-
-### 이벤트 정보 가져오기
-```javascript
-button.addEventListener('click', (event) => {
-    console.log(event.target);     // 클릭된 요소
-    console.log(event.type);       // 이벤트 타입 (click)
-    console.log(event.clientX);    // 마우스 X 좌표
-    console.log(event.clientY);    // 마우스 Y 좌표
-});
+```
+버튼을 클릭하면 에러가 나. 
+콘솔에 "[에러 메시지]"라고 떠.
+이게 무슨 뜻인지 설명하고 고쳐줘.
 ```
 
-### 기본 동작 막기
-```javascript
-link.addEventListener('click', (e) => {
-    e.preventDefault(); // 링크 이동 방지
-    console.log("링크 클릭됨 (이동 안 됨)");
-});
-```
+### 흔한 증상별 프롬프트
 
-## 여러 요소에 이벤트 추가
+| 증상 | 프롬프트 |
+|------|---------|
+| 클릭해도 아무 반응 없음 | "버튼 클릭 이벤트가 작동을 안 해. 원인을 찾아줘." |
+| 페이지가 새로고침됨 | "버튼 클릭할 때마다 페이지가 새로고침돼. 이 현상이 없어지게 해줘." |
+| 이벤트가 두 번 실행됨 | "버튼을 한 번 클릭했는데 동작이 두 번 실행돼. 고쳐줘." |
+| 모바일에서만 안 됨 | "PC에서는 잘 되는데 핸드폰에서 버튼이 안 눌려. 수정해줘." |
 
-### 반복문 사용
-```javascript
-const buttons = document.querySelectorAll('.btn');
+---
 
-buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        console.log(button.textContent + " 클릭됨");
-    });
-});
-```
+## 마무리 팁
 
-## AI로 이벤트 코드 생성
+- **말로 먼저 정리하기**: "버튼을 누르면 뭐가 어떻게 바뀌면 좋겠다"를 한 문장으로 정리한 뒤 AI에게 전달하세요.
+- **한 번에 하나씩**: 여러 기능을 한꺼번에 요청하면 복잡해질 수 있습니다. 하나씩 만들고 확인하면서 쌓아가세요.
+- **작동 확인 먼저**: AI가 코드를 만들어줬다면 실제로 브라우저에서 눌러보고 확인하세요. 바로 써볼 수 있는지가 가장 중요합니다.
 
-Cursor AI에게 요청:
-```
-다음 기능 만들어줘:
-- 입력창에 이름 입력
-- 버튼 클릭 시 "안녕하세요, [이름]님!" 표시
-- 입력창이 비어있으면 "이름을 입력하세요" 경고
-```
-
-## 디버깅 팁
-
-### 이벤트가 안 작동할 때
-```javascript
-// 1. 요소가 제대로 선택됐는지 확인
-console.log(button);
-
-// 2. 이벤트가 등록됐는지 확인
-button.addEventListener('click', () => {
-    console.log("이벤트 작동!");
-});
-
-// 3. 스크립트 위치 확인
-// </body> 직전에 <script> 태그를 넣거나
-// DOMContentLoaded 사용
-document.addEventListener('DOMContentLoaded', () => {
-    // 여기에 이벤트 리스너 코드
-});
-```
-
-## 흔한 실수
-
-### 1. 요소 선택 전 스크립트 실행
-```javascript
-// 나쁜 예: HTML보다 먼저 실행됨
-const button = document.getElementById('btn'); // null
-
-// 좋은 예: HTML 로드 후 실행
-document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('btn');
-});
-```
-
-### 2. 이벤트 리스너를 함수 호출로 작성
-```javascript
-// 나쁜 예
-button.addEventListener('click', myFunction()); // 즉시 실행됨
-
-// 좋은 예
-button.addEventListener('click', myFunction);
-```
-
-### 3. 같은 이벤트 중복 등록
-```javascript
-// 나쁜 예: 클릭할 때마다 카운트가 2씩 증가
-button.addEventListener('click', increment);
-button.addEventListener('click', increment);
-
-// 좋은 예: 한 번만 등록
-button.addEventListener('click', increment);
-```
-
-## 다음 단계
-
-버튼 클릭 이벤트를 배웠습니다. 이제 간단한 계산기를 만들어봅시다!
+다음 단계에서는 이 이벤트 기술을 활용해 실제 계산기를 만들어봅니다!
